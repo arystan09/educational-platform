@@ -13,6 +13,7 @@ import { CoursesModule } from './api/courses/courses.module';
 import { ChaptersModule } from './api/chapters/chapters.module';
 import { ApplicationsModule } from './api/applications/applications.module';
 import { ProgressModule } from './api/progress/progress.module';
+import { ReviewsModule } from './api/reviews/reviews.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ProgressModule } from './api/progress/progress.module';
     ChaptersModule,
     ProgressModule,
     ApplicationsModule,
+    ReviewsModule,
 
   ],
   controllers: [AppController],

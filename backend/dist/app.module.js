@@ -18,6 +18,7 @@ const courses_module_1 = require("./api/courses/courses.module");
 const chapters_module_1 = require("./api/chapters/chapters.module");
 const applications_module_1 = require("./api/applications/applications.module");
 const progress_module_1 = require("./api/progress/progress.module");
+const reviews_module_1 = require("./api/reviews/reviews.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -46,6 +47,7 @@ exports.AppModule = AppModule = __decorate([
             chapters_module_1.ChaptersModule,
             progress_module_1.ProgressModule,
             applications_module_1.ApplicationsModule,
+            reviews_module_1.ReviewsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

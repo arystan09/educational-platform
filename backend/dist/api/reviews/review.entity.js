@@ -9,59 +9,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Course = void 0;
+exports.Review = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../users/user.entity");
-const review_entity_1 = require("../reviews/review.entity");
-let Course = class Course {
+const course_entity_1 = require("../courses/course.entity");
+let Review = class Review {
     id;
-    title;
-    description;
-    thumbnailUrl;
-    createdBy;
-    isPublished;
-    reviews;
+    rating;
+    comment;
+    user;
+    course;
     createdAt;
     updatedAt;
 };
-exports.Course = Course;
+exports.Review = Review;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Course.prototype, "id", void 0);
+], Review.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'int', width: 1 }),
+    __metadata("design:type", Number)
+], Review.prototype, "rating", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
-], Course.prototype, "title", void 0);
+], Review.prototype, "comment", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'text' }),
-    __metadata("design:type", String)
-], Course.prototype, "description", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Course.prototype, "thumbnailUrl", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.id, { onDelete: 'SET NULL' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.reviews, { onDelete: 'CASCADE' }),
     __metadata("design:type", user_entity_1.User)
-], Course.prototype, "createdBy", void 0);
+], Review.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: false }),
-    __metadata("design:type", Boolean)
-], Course.prototype, "isPublished", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (review) => review.course),
-    __metadata("design:type", Array)
-], Course.prototype, "reviews", void 0);
+    (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, (course) => course.reviews, { onDelete: 'CASCADE' }),
+    __metadata("design:type", course_entity_1.Course)
+], Review.prototype, "course", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Course.prototype, "createdAt", void 0);
+], Review.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Course.prototype, "updatedAt", void 0);
-exports.Course = Course = __decorate([
-    (0, typeorm_1.Entity)()
-], Course);
-//# sourceMappingURL=course.entity.js.map
+], Review.prototype, "updatedAt", void 0);
+exports.Review = Review = __decorate([
+    (0, typeorm_1.Entity)(),
+    (0, typeorm_1.Unique)(['user', 'course'])
+], Review);
+//# sourceMappingURL=review.entity.js.map
