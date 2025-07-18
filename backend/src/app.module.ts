@@ -7,19 +7,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 // Модули
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { CoursesModule } from './courses/courses.module';
-import { ChaptersModule } from './chapters/chapters.module';
+import { UsersModule } from './api/users/users.module';
+import { AuthModule } from './api/auth/auth.module';
+import { CoursesModule } from './api/courses/courses.module';
+import { ChaptersModule } from './api/chapters/chapters.module';
+import { ApplicationsModule } from './api/applications/applications.module';
 
 @Module({
   imports: [
-    // Загружаем .env глобально
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
-    // Подключение к PostgreSQL через TypeORM
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
@@ -29,19 +27,18 @@ import { ChaptersModule } from './chapters/chapters.module';
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
         autoLoadEntities: true,
-        synchronize: true, // на проде обязательно ставим false
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),
 
-    // Другие модули
     UsersModule,
-
     AuthModule,
-
     CoursesModule,
-
     ChaptersModule,
+
+    ApplicationsModule,  // <-- добавь сюда
+
   ],
   controllers: [AppController],
   providers: [AppService],
