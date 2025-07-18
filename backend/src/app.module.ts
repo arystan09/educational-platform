@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
+import { ChaptersModule } from './chapters/chapters.module';
 
 @Module({
   imports: [
@@ -39,6 +40,8 @@ import { CoursesModule } from './courses/courses.module';
     AuthModule,
 
     CoursesModule,
+
+    ChaptersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
