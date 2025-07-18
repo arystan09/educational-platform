@@ -12,6 +12,7 @@ import { AuthModule } from './api/auth/auth.module';
 import { CoursesModule } from './api/courses/courses.module';
 import { ChaptersModule } from './api/chapters/chapters.module';
 import { ApplicationsModule } from './api/applications/applications.module';
+import { ProgressModule } from './api/progress/progress.module';
 
 @Module({
   imports: [
@@ -36,8 +37,8 @@ import { ApplicationsModule } from './api/applications/applications.module';
     AuthModule,
     CoursesModule,
     ChaptersModule,
-
-    ApplicationsModule,  // <-- добавь сюда
+    ProgressModule,
+    ApplicationsModule,
 
   ],
   controllers: [AppController],
