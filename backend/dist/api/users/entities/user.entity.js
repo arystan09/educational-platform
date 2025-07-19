@@ -16,6 +16,7 @@ const course_progress_entity_1 = require("../../progress/entities/course_progres
 const progress_entity_1 = require("../../progress/entities/progress.entity");
 const review_entity_1 = require("../../reviews/review.entity");
 const role_enum_1 = require("../enums/role.enum");
+const assignment_submission_entity_1 = require("../../assignments/entites/assignment-submission.entity");
 let User = class User {
     id;
     name;
@@ -25,6 +26,7 @@ let User = class User {
     courses;
     courseProgress;
     progress;
+    assignmentSubmissions;
     reviews;
     createdAt;
     updatedAt;
@@ -62,6 +64,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => progress_entity_1.Progress, (p) => p.user),
     __metadata("design:type", Array)
 ], User.prototype, "progress", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => assignment_submission_entity_1.AssignmentSubmission, sub => sub.student),
+    __metadata("design:type", Array)
+], User.prototype, "assignmentSubmissions", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (r) => r.user),
     __metadata("design:type", Array)

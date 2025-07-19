@@ -15,6 +15,7 @@ import { ApplicationsModule } from './api/applications/applications.module';
 import { ProgressModule } from './api/progress/progress.module';
 import { ReviewsModule } from './api/reviews/reviews.module';
 import { QuizzesModule } from './api/quizzes/quizzes.module';
+import { AssignmentsModule } from './api/assignments/assignments.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { QuizzesModule } from './api/quizzes/quizzes.module';
     ApplicationsModule,
     ReviewsModule,
     QuizzesModule,
+    AssignmentsModule,
 
   ],
   controllers: [AppController],

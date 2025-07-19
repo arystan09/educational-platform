@@ -11,6 +11,7 @@ import { CourseProgress } from '../../progress/entities/course_progress.entity';
 import { Progress } from '../../progress/entities/progress.entity';
 import { Review } from '../../reviews/review.entity';
 import { Role } from '../enums/role.enum';
+import { AssignmentSubmission } from '../../assignments/entites/assignment-submission.entity';
 
 @Entity()
 export class User {
@@ -26,7 +27,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: Role, default: Role.STUDENT }) // <-- добавили поле
+  @Column({ type: 'enum', enum: Role, default: Role.STUDENT })
   role: Role;
 
   @OneToMany(() => Course, (course) => course.createdBy)
@@ -37,6 +38,9 @@ export class User {
 
   @OneToMany(() => Progress, (p) => p.user)
   progress: Progress[];
+
+  @OneToMany(() => AssignmentSubmission, sub => sub.student)
+  assignmentSubmissions: AssignmentSubmission[];
 
   @OneToMany(() => Review, (r) => r.user)
   reviews: Review[];

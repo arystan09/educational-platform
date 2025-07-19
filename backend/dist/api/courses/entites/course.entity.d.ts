@@ -3,6 +3,7 @@ import { Review } from '../../reviews/review.entity';
 import { Chapter } from '../../chapters/chapter.entity';
 import { CourseProgress } from '../../progress/entities/course_progress.entity';
 import { Quiz } from '../../quizzes/entities/quiz.entity';
+import { Assignment } from '../../assignments/entites/assignment.entity';
 export declare class Course {
     id: number;
     title: string;
@@ -13,6 +14,7 @@ export declare class Course {
     chapters: Chapter[];
     reviews: Review[];
     progress: CourseProgress[];
+    assignments: Assignment[];
     quizzes: Quiz[];
     createdAt: Date;
     updatedAt: Date;

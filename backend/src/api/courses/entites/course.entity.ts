@@ -12,6 +12,7 @@ import { Review } from '../../reviews/review.entity';
 import { Chapter } from '../../chapters/chapter.entity';
 import { CourseProgress } from '../../progress/entities/course_progress.entity';
 import { Quiz } from '../../quizzes/entities/quiz.entity';
+import { Assignment } from '../../assignments/entites/assignment.entity';
 
 @Entity()
 export class Course {
@@ -41,6 +42,9 @@ export class Course {
 
   @OneToMany(() => CourseProgress, (progress) => progress.course)
   progress: CourseProgress[];
+
+  @OneToMany(() => Assignment, assignment => assignment.course)
+  assignments: Assignment[];
 
   @OneToMany(() => Quiz, (quiz) => quiz.course)
   quizzes: Quiz[];
