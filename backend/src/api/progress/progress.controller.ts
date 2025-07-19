@@ -46,4 +46,12 @@ export class ProgressController {
   ) {
     return this.service.getProgressPercent(userId, courseId);
   }
+
+  @Get('certificate/:courseId')
+  getCertificate(
+    @UserId() userId: number,
+    @Param('courseId', ParseIntPipe) courseId: number,
+  ) {
+    return this.service.getCertificate(userId, courseId);
+  }
 }

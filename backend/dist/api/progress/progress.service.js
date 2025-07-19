@@ -20,16 +20,22 @@ const progress_entity_1 = require("./entities/progress.entity");
 const chapter_entity_1 = require("../chapters/chapter.entity");
 const course_entity_1 = require("../courses/entites/course.entity");
 const course_progress_entity_1 = require("./entities/course_progress.entity");
+const certificate_service_1 = require("../certificates/certificate.service");
+const user_entity_1 = require("../users/entities/user.entity");
 let ProgressService = class ProgressService {
     progressRepo;
     chapterRepo;
     courseRepo;
     courseProgressRepo;
-    constructor(progressRepo, chapterRepo, courseRepo, courseProgressRepo) {
+    userRepo;
+    certificateService;
+    constructor(progressRepo, chapterRepo, courseRepo, courseProgressRepo, userRepo, certificateService) {
         this.progressRepo = progressRepo;
         this.chapterRepo = chapterRepo;
         this.courseRepo = courseRepo;
         this.courseProgressRepo = courseProgressRepo;
+        this.userRepo = userRepo;
+        this.certificateService = certificateService;
     }
     async markComplete(userId, chapterId) {
         const chapter = await this.chapterRepo.findOne({
@@ -90,9 +96,28 @@ let ProgressService = class ProgressService {
         });
         if (!course)
             throw new common_1.NotFoundException('Курс не найден');
-        const allCompleted = course.chapters.every(ch => progress.completedChapters[ch.id]);
+        const allCompleted = course.chapters.every((ch) => progress.completedChapters[ch.id]);
         progress.isCompleted = allCompleted;
+        if (allCompleted && !progress.certificateUrl) {
+            const user = await this.userRepo.findOne({ where: { id: userId } });
+            if (!user)
+                throw new common_1.NotFoundException('Пользователь не найден');
+            const certificateUrl = await this.certificateService.generate(user, course);
+            progress.certificateUrl = certificateUrl;
+        }
         return this.courseProgressRepo.save(progress);
+    }
+    async getCertificate(userId, courseId) {
+        const progress = await this.courseProgressRepo.findOne({
+            where: {
+                user: { id: userId },
+                course: { id: courseId },
+            },
+        });
+        if (!progress || !progress.isCompleted) {
+            throw new common_1.ForbiddenException('Курс ещё не завершён');
+        }
+        return { certificateUrl: progress.certificateUrl };
     }
 };
 exports.ProgressService = ProgressService;
@@ -102,9 +127,12 @@ exports.ProgressService = ProgressService = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(chapter_entity_1.Chapter)),
     __param(2, (0, typeorm_1.InjectRepository)(course_entity_1.Course)),
     __param(3, (0, typeorm_1.InjectRepository)(course_progress_entity_1.CourseProgress)),
+    __param(4, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        typeorm_2.Repository,
+        certificate_service_1.CertificateService])
 ], ProgressService);
 //# sourceMappingURL=progress.service.js.map

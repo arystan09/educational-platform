@@ -18,6 +18,7 @@ let CourseProgress = class CourseProgress {
     user;
     course;
     completedChapters;
+    certificateUrl;
     isCompleted;
     createdAt;
     updatedAt;
@@ -39,6 +40,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'simple-json', default: '{}' }),
     __metadata("design:type", Object)
 ], CourseProgress.prototype, "completedChapters", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], CourseProgress.prototype, "certificateUrl", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)

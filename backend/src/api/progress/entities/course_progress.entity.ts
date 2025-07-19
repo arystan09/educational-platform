@@ -16,6 +16,9 @@ export class CourseProgress {
   @Column({ type: 'simple-json', default: '{}' })
   completedChapters: Record<number, boolean>;
 
+  @Column({ nullable: true })
+  certificateUrl: string;
+
   @Column({ default: false })
   isCompleted: boolean;
 

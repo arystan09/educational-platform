@@ -5,6 +5,7 @@ export declare class CourseProgress {
     user: User;
     course: Course;
     completedChapters: Record<number, boolean>;
+    certificateUrl: string;
     isCompleted: boolean;
     createdAt: Date;
     updatedAt: Date;

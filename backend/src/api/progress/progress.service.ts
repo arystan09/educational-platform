@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -6,6 +10,8 @@ import { Progress } from './entities/progress.entity';
 import { Chapter } from '../chapters/chapter.entity';
 import { Course } from '../courses/entites/course.entity';
 import { CourseProgress } from './entities/course_progress.entity';
+import { CertificateService } from '../certificates/certificate.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ProgressService {
@@ -21,9 +27,14 @@ export class ProgressService {
 
     @InjectRepository(CourseProgress)
     private readonly courseProgressRepo: Repository<CourseProgress>,
+
+    @InjectRepository(User)
+    private readonly userRepo: Repository<User>,
+
+    private readonly certificateService: CertificateService,
   ) {}
 
-  // ✅ Стандартная отметка главы завершённой (по текущей архитектуре)
+  // ✅ Стандартная отметка главы завершённой
   async markComplete(userId: number, chapterId: number) {
     const chapter = await this.chapterRepo.findOne({
       where: { id: chapterId },
@@ -73,8 +84,12 @@ export class ProgressService {
     return { completed, total, percent: Math.round(percent) };
   }
 
-  // ⚠️ Альтернативный подход — ведение прогресса по курсу в одной записи (можно не использовать сейчас)
-  async markChapterCompleted(userId: number, courseId: number, chapterId: number) {
+  // ✅ Альтернативный подход + генерация сертификата
+  async markChapterCompleted(
+    userId: number,
+    courseId: number,
+    chapterId: number,
+  ) {
     let progress = await this.courseProgressRepo.findOne({
       where: { user: { id: userId }, course: { id: courseId } },
     });
@@ -93,15 +108,42 @@ export class ProgressService {
       where: { id: courseId },
       relations: ['chapters'],
     });
-
     if (!course) throw new NotFoundException('Курс не найден');
 
     const allCompleted = course.chapters.every(
-      ch => progress.completedChapters[ch.id],
+      (ch) => progress.completedChapters[ch.id],
     );
 
     progress.isCompleted = allCompleted;
 
+    // ✅ Генерация сертификата
+    if (allCompleted && !progress.certificateUrl) {
+      const user = await this.userRepo.findOne({ where: { id: userId } });
+      if (!user) throw new NotFoundException('Пользователь не найден');
+
+      const certificateUrl = await this.certificateService.generate(
+        user,
+        course,
+      );
+      progress.certificateUrl = certificateUrl;
+    }
+
     return this.courseProgressRepo.save(progress);
+  }
+
+  // ✅ Получить сертификат, если курс завершён
+  async getCertificate(userId: number, courseId: number) {
+    const progress = await this.courseProgressRepo.findOne({
+      where: {
+        user: { id: userId },
+        course: { id: courseId },
+      },
+    });
+
+    if (!progress || !progress.isCompleted) {
+      throw new ForbiddenException('Курс ещё не завершён');
+    }
+
+    return { certificateUrl: progress.certificateUrl };
   }
 }

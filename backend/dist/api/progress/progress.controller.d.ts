@@ -11,4 +11,7 @@ export declare class ProgressController {
         total: number;
         percent: number;
     }>;
+    getCertificate(userId: number, courseId: number): Promise<{
+        certificateUrl: string;
+    }>;
 }

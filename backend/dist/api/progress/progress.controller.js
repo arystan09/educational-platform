@@ -35,6 +35,9 @@ let ProgressController = class ProgressController {
     getPercent(userId, courseId) {
         return this.service.getProgressPercent(userId, courseId);
     }
+    getCertificate(userId, courseId) {
+        return this.service.getCertificate(userId, courseId);
+    }
 };
 exports.ProgressController = ProgressController;
 __decorate([
@@ -70,6 +73,14 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getPercent", null);
+__decorate([
+    (0, common_1.Get)('certificate/:courseId'),
+    __param(0, (0, user_id_decorator_1.UserId)()),
+    __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], ProgressController.prototype, "getCertificate", null);
 exports.ProgressController = ProgressController = __decorate([
     (0, common_1.Controller)('progress'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
