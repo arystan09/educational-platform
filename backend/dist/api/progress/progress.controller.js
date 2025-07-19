@@ -26,6 +26,9 @@ let ProgressController = class ProgressController {
     markComplete(userId, dto) {
         return this.service.markComplete(userId, dto.chapterId);
     }
+    markChapterCompleted(userId, courseId, chapterId) {
+        return this.service.markChapterCompleted(userId, courseId, chapterId);
+    }
     getCompleted(userId, courseId) {
         return this.service.getCompletedChapters(userId, courseId);
     }
@@ -42,6 +45,15 @@ __decorate([
     __metadata("design:paramtypes", [Number, mark_complete_dto_1.MarkCompleteDto]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "markComplete", null);
+__decorate([
+    (0, common_1.Post)('complete/:courseId/:chapterId'),
+    __param(0, (0, user_id_decorator_1.UserId)()),
+    __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
+    __param(2, (0, common_1.Param)('chapterId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:returntype", void 0)
+], ProgressController.prototype, "markChapterCompleted", null);
 __decorate([
     (0, common_1.Get)('completed/:courseId'),
     __param(0, (0, user_id_decorator_1.UserId)()),

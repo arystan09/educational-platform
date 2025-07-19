@@ -7,8 +7,8 @@ import {
   UpdateDateColumn,
   Unique,
 } from 'typeorm';
-import { User } from '../users/user.entity';
-import { Course } from '../courses/course.entity';
+import { User } from '../users/entities/user.entity';
+import { Course } from '../courses/entites/course.entity';
 
 @Entity()
 @Unique(['user', 'course'])

@@ -22,6 +22,15 @@ export class ProgressController {
     return this.service.markComplete(userId, dto.chapterId);
   }
 
+  @Post('complete/:courseId/:chapterId')
+  markChapterCompleted(
+    @UserId() userId: number,
+    @Param('courseId', ParseIntPipe) courseId: number,
+    @Param('chapterId', ParseIntPipe) chapterId: number,
+  ) {
+    return this.service.markChapterCompleted(userId, courseId, chapterId);
+  }
+
   @Get('completed/:courseId')
   getCompleted(
     @UserId() userId: number,

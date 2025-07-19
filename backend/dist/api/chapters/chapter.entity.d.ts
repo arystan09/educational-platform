@@ -1,4 +1,4 @@
-import { Course } from '../courses/course.entity';
+import { Course } from '../courses/entites/course.entity';
 export declare class Chapter {
     id: number;
     title: string;

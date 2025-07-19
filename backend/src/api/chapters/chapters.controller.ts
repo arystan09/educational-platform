@@ -19,7 +19,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Application, ApplicationStatus } from '../applications/entities/application.entity';
 import { UserId } from '../auth/decorators/user-id.decorator';
-import { User } from '../users/user.entity';
+import { User } from '../users/entities/user.entity';
 
 @Controller('chapters')
 export class ChaptersController {

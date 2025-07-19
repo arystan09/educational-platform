@@ -12,8 +12,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const reviews_controller_1 = require("./reviews.controller");
 const reviews_service_1 = require("./reviews.service");
 const review_entity_1 = require("./review.entity");
-const course_entity_1 = require("../courses/course.entity");
-const user_entity_1 = require("../users/user.entity");
+const course_entity_1 = require("../courses/entites/course.entity");
+const user_entity_1 = require("../users/entities/user.entity");
 let ReviewsModule = class ReviewsModule {
 };
 exports.ReviewsModule = ReviewsModule;

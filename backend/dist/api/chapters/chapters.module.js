@@ -12,7 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const chapters_service_1 = require("./chapters.service");
 const chapters_controller_1 = require("./chapters.controller");
 const chapter_entity_1 = require("./chapter.entity");
-const course_entity_1 = require("../courses/course.entity");
+const course_entity_1 = require("../courses/entites/course.entity");
 const application_entity_1 = require("../applications/entities/application.entity");
 let ChaptersModule = class ChaptersModule {
 };

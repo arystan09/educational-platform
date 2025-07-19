@@ -1,7 +1,7 @@
 import { Review } from './review.entity';
 import { Repository } from 'typeorm';
-import { Course } from '../courses/course.entity';
-import { User } from '../users/user.entity';
+import { Course } from '../courses/entites/course.entity';
+import { User } from '../users/entities/user.entity';
 export declare class ReviewsService {
     private readonly reviewRepo;
     private readonly courseRepo;

@@ -2,7 +2,7 @@ import { ChaptersService } from './chapters.service';
 import { CreateChapterDto } from './dto/create-chapter.dto';
 import { Repository } from 'typeorm';
 import { Application } from '../applications/entities/application.entity';
-import { User } from '../users/user.entity';
+import { User } from '../users/entities/user.entity';
 export declare class ChaptersController {
     private readonly chaptersService;
     private readonly applicationRepo;

@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Course } from '../courses/course.entity';
+import { Course } from '../courses/entites/course.entity';
 
 @Entity()
 export class Chapter {

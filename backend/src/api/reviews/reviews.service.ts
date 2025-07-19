@@ -5,8 +5,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Review } from './review.entity';
 import { Repository } from 'typeorm';
-import { Course } from '../courses/course.entity';
-import { User } from '../users/user.entity';
+import { Course } from '../courses/entites/course.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ReviewsService {

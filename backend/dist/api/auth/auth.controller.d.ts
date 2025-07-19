@@ -10,7 +10,7 @@ declare class LoginDto {
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
-    register(body: RegisterDto): Promise<import("../users/user.entity").User>;
+    register(body: RegisterDto): Promise<import("../users/entities/user.entity").User>;
     login(body: LoginDto): Promise<{
         access_token: string;
     }>;

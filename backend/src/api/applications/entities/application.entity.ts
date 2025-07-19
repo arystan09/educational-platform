@@ -5,8 +5,8 @@ import {
   ManyToOne,
   CreateDateColumn,
 } from 'typeorm';
-import { User } from '../../users/user.entity';
-import { Course } from '../../courses/course.entity';
+import { User } from '../../users/entities/user.entity';
+import { Course } from '../../courses/entites/course.entity';
 
 export enum ApplicationStatus {
   PENDING = 'PENDING',

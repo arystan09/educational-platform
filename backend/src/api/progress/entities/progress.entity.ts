@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   Unique,
 } from 'typeorm';
-import { User } from '../../users/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { Chapter } from '../../chapters/chapter.entity';
 
 @Entity()

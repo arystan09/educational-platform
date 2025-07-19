@@ -20,7 +20,7 @@ const passport_1 = require("@nestjs/passport");
 const roles_guard_1 = require("../auth/guards/roles.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const current_user_decorator_1 = require("../auth/decorators/current-user.decorator");
-const user_entity_1 = require("../users/user.entity");
+const user_entity_1 = require("../users/entities/user.entity");
 let CoursesController = class CoursesController {
     coursesService;
     constructor(coursesService) {

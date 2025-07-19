@@ -12,8 +12,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const applications_controller_1 = require("./applications.controller");
 const applications_service_1 = require("./applications.service");
 const application_entity_1 = require("./entities/application.entity");
-const course_entity_1 = require("../courses/course.entity");
-const user_entity_1 = require("../users/user.entity");
+const course_entity_1 = require("../courses/entites/course.entity");
+const user_entity_1 = require("../users/entities/user.entity");
 let ApplicationsModule = class ApplicationsModule {
 };
 exports.ApplicationsModule = ApplicationsModule;

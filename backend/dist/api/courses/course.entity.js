@@ -8,11 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Course = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../users/user.entity");
 const review_entity_1 = require("../reviews/review.entity");
+const chapter_entity_1 = require("../chapters/chapter.entity");
+const course_progress_entity_1 = require("../progress/entities/course_progress.entity");
 let Course = class Course {
     id;
     title;
@@ -20,7 +23,9 @@ let Course = class Course {
     thumbnailUrl;
     createdBy;
     isPublished;
+    chapters;
     reviews;
+    progress;
     createdAt;
     updatedAt;
 };
@@ -42,17 +47,25 @@ __decorate([
     __metadata("design:type", String)
 ], Course.prototype, "thumbnailUrl", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.id, { onDelete: 'SET NULL' }),
-    __metadata("design:type", user_entity_1.User)
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.courses, { onDelete: 'SET NULL' }),
+    __metadata("design:type", typeof (_a = typeof user_entity_1.User !== "undefined" && user_entity_1.User) === "function" ? _a : Object)
 ], Course.prototype, "createdBy", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], Course.prototype, "isPublished", void 0);
 __decorate([
+    (0, typeorm_1.OneToMany)(() => chapter_entity_1.Chapter, (chapter) => chapter.course),
+    __metadata("design:type", Array)
+], Course.prototype, "chapters", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (review) => review.course),
     __metadata("design:type", Array)
 ], Course.prototype, "reviews", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => course_progress_entity_1.CourseProgress, (progress) => progress.course),
+    __metadata("design:type", Array)
+], Course.prototype, "progress", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Application } from '../applications/entities/application.entity'; // путь уточни, если отличается
-import { Course } from '../courses/course.entity';
-import { User } from '../users/user.entity';
+import { Course } from '../courses/entites/course.entity';
+import { User } from '../users/entities/user.entity';
 import { ApplicationStatus } from './entities/application.entity';
 
 @Injectable()

@@ -23,7 +23,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const application_entity_1 = require("../applications/entities/application.entity");
 const user_id_decorator_1 = require("../auth/decorators/user-id.decorator");
-const user_entity_1 = require("../users/user.entity");
+const user_entity_1 = require("../users/entities/user.entity");
 let ChaptersController = class ChaptersController {
     chaptersService;
     applicationRepo;

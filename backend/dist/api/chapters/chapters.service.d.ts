@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { Chapter } from './chapter.entity';
 import { CreateChapterDto } from './dto/create-chapter.dto';
-import { Course } from '../courses/course.entity';
+import { Course } from '../courses/entites/course.entity';
 export declare class ChaptersService {
     private chapterRepo;
     private courseRepo;

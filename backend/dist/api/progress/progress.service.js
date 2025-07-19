@@ -15,15 +15,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProgressService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const progress_entity_1 = require("./entities/progress.entity");
 const typeorm_2 = require("typeorm");
+const progress_entity_1 = require("./entities/progress.entity");
 const chapter_entity_1 = require("../chapters/chapter.entity");
+const course_entity_1 = require("../courses/entites/course.entity");
+const course_progress_entity_1 = require("./entities/course_progress.entity");
 let ProgressService = class ProgressService {
     progressRepo;
     chapterRepo;
-    constructor(progressRepo, chapterRepo) {
+    courseRepo;
+    courseProgressRepo;
+    constructor(progressRepo, chapterRepo, courseRepo, courseProgressRepo) {
         this.progressRepo = progressRepo;
         this.chapterRepo = chapterRepo;
+        this.courseRepo = courseRepo;
+        this.courseProgressRepo = courseProgressRepo;
     }
     async markComplete(userId, chapterId) {
         const chapter = await this.chapterRepo.findOne({
@@ -66,13 +72,39 @@ let ProgressService = class ProgressService {
         const percent = total > 0 ? (completed / total) * 100 : 0;
         return { completed, total, percent: Math.round(percent) };
     }
+    async markChapterCompleted(userId, courseId, chapterId) {
+        let progress = await this.courseProgressRepo.findOne({
+            where: { user: { id: userId }, course: { id: courseId } },
+        });
+        if (!progress) {
+            progress = this.courseProgressRepo.create({
+                user: { id: userId },
+                course: { id: courseId },
+                completedChapters: {},
+            });
+        }
+        progress.completedChapters[chapterId] = true;
+        const course = await this.courseRepo.findOne({
+            where: { id: courseId },
+            relations: ['chapters'],
+        });
+        if (!course)
+            throw new common_1.NotFoundException('Курс не найден');
+        const allCompleted = course.chapters.every(ch => progress.completedChapters[ch.id]);
+        progress.isCompleted = allCompleted;
+        return this.courseProgressRepo.save(progress);
+    }
 };
 exports.ProgressService = ProgressService;
 exports.ProgressService = ProgressService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(progress_entity_1.Progress)),
     __param(1, (0, typeorm_1.InjectRepository)(chapter_entity_1.Chapter)),
+    __param(2, (0, typeorm_1.InjectRepository)(course_entity_1.Course)),
+    __param(3, (0, typeorm_1.InjectRepository)(course_progress_entity_1.CourseProgress)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], ProgressService);
 //# sourceMappingURL=progress.service.js.map

@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chapter } from './chapter.entity';
 import { CreateChapterDto } from './dto/create-chapter.dto';
-import { Course } from '../courses/course.entity';
+import { Course } from '../courses/entites/course.entity';
 
 @Injectable()
 export class ChaptersService {

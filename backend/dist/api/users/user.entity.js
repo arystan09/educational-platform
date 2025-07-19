@@ -11,19 +11,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
+const course_entity_1 = require("../courses/course.entity");
+const course_progress_entity_1 = require("../progress/entities/course_progress.entity");
+const progress_entity_1 = require("../progress/entities/progress.entity");
 const review_entity_1 = require("../reviews/review.entity");
 let User = class User {
     id;
+    name;
     email;
     password;
-    role;
+    courses;
+    courseProgress;
+    progress;
     reviews;
+    createdAt;
+    updatedAt;
 };
 exports.User = User;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
@@ -33,13 +45,29 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 'USER' }),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
+    (0, typeorm_1.OneToMany)(() => course_entity_1.Course, (course) => course.createdBy),
+    __metadata("design:type", Array)
+], User.prototype, "courses", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (review) => review.user),
+    (0, typeorm_1.OneToMany)(() => course_progress_entity_1.CourseProgress, (cp) => cp.user),
+    __metadata("design:type", Array)
+], User.prototype, "courseProgress", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => progress_entity_1.Progress, (p) => p.user),
+    __metadata("design:type", Array)
+], User.prototype, "progress", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (r) => r.user),
     __metadata("design:type", Array)
 ], User.prototype, "reviews", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], User.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], User.prototype, "updatedAt", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);
