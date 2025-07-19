@@ -11,6 +11,7 @@ import { User } from '../../users/entities/user.entity';
 import { Review } from '../../reviews/review.entity';
 import { Chapter } from '../../chapters/chapter.entity';
 import { CourseProgress } from '../../progress/entities/course_progress.entity';
+import { Quiz } from '../../quizzes/entities/quiz.entity';
 
 @Entity()
 export class Course {
@@ -40,6 +41,9 @@ export class Course {
 
   @OneToMany(() => CourseProgress, (progress) => progress.course)
   progress: CourseProgress[];
+
+  @OneToMany(() => Quiz, (quiz) => quiz.course)
+  quizzes: Quiz[];
 
   @CreateDateColumn()
   createdAt: Date;
