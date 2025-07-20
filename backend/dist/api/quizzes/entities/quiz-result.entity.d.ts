@@ -5,5 +5,6 @@ export declare class QuizResult {
     user: User;
     quiz: Quiz;
     score: number;
+    createdAt: Date;
     completedAt: Date;
 }

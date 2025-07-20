@@ -10,9 +10,11 @@ import { User } from '../../users/entities/user.entity';
 
 export enum SubmissionStatus {
   PENDING = 'PENDING',
-  NEEDS_REVISION = 'NEEDS_REVISION',
+  REVIEWED = 'REVIEWED',
+  REJECTED = 'REJECTED',
   GRADED = 'GRADED',
 }
+
 
 @Entity()
 export class AssignmentSubmission {

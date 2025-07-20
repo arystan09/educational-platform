@@ -2,7 +2,8 @@ import { Assignment } from './assignment.entity';
 import { User } from '../../users/entities/user.entity';
 export declare enum SubmissionStatus {
     PENDING = "PENDING",
-    NEEDS_REVISION = "NEEDS_REVISION",
+    REVIEWED = "REVIEWED",
+    REJECTED = "REJECTED",
     GRADED = "GRADED"
 }
 export declare class AssignmentSubmission {

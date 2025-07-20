@@ -17,6 +17,8 @@ const chapter_entity_1 = require("../../chapters/chapter.entity");
 const course_progress_entity_1 = require("../../progress/entities/course_progress.entity");
 const quiz_entity_1 = require("../../quizzes/entities/quiz.entity");
 const assignment_entity_1 = require("../../assignments/entites/assignment.entity");
+const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
+const certificate_entity_1 = require("../../certificates/entities/certificate.entity");
 let Course = class Course {
     id;
     title;
@@ -28,6 +30,8 @@ let Course = class Course {
     reviews;
     progress;
     assignments;
+    enrollments;
+    certificates;
     quizzes;
     createdAt;
     updatedAt;
@@ -73,6 +77,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => assignment_entity_1.Assignment, assignment => assignment.course),
     __metadata("design:type", Array)
 ], Course.prototype, "assignments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => enrollment_entity_1.Enrollment, (enrollment) => enrollment.course),
+    __metadata("design:type", Array)
+], Course.prototype, "enrollments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => certificate_entity_1.Certificate, (cert) => cert.user),
+    __metadata("design:type", Array)
+], Course.prototype, "certificates", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => quiz_entity_1.Quiz, (quiz) => quiz.course),
     __metadata("design:type", Array)

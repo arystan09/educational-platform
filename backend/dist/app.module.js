@@ -21,6 +21,10 @@ const progress_module_1 = require("./api/progress/progress.module");
 const reviews_module_1 = require("./api/reviews/reviews.module");
 const quizzes_module_1 = require("./api/quizzes/quizzes.module");
 const assignments_module_1 = require("./api/assignments/assignments.module");
+const notifications_module_1 = require("./api/notifications/notifications.module");
+const enrollment_module_1 = require("./api/enrollment/enrollment.module");
+const certificate_module_1 = require("./api/certificates/certificate.module");
+const analytics_module_1 = require("./api/analytics/analytics.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -52,6 +56,10 @@ exports.AppModule = AppModule = __decorate([
             reviews_module_1.ReviewsModule,
             quizzes_module_1.QuizzesModule,
             assignments_module_1.AssignmentsModule,
+            notifications_module_1.NotificationsModule,
+            enrollment_module_1.EnrollmentModule,
+            certificate_module_1.CertificateModule,
+            analytics_module_1.AnalyticsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -17,5 +17,8 @@ export class QuizResult {
   score: number;
 
   @CreateDateColumn()
+  createdAt: Date;
+
+  @CreateDateColumn()
   completedAt: Date;
 }

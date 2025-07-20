@@ -16,7 +16,8 @@ const user_entity_1 = require("../../users/entities/user.entity");
 var SubmissionStatus;
 (function (SubmissionStatus) {
     SubmissionStatus["PENDING"] = "PENDING";
-    SubmissionStatus["NEEDS_REVISION"] = "NEEDS_REVISION";
+    SubmissionStatus["REVIEWED"] = "REVIEWED";
+    SubmissionStatus["REJECTED"] = "REJECTED";
     SubmissionStatus["GRADED"] = "GRADED";
 })(SubmissionStatus || (exports.SubmissionStatus = SubmissionStatus = {}));
 let AssignmentSubmission = class AssignmentSubmission {

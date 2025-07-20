@@ -12,6 +12,9 @@ import { Progress } from '../../progress/entities/progress.entity';
 import { Review } from '../../reviews/review.entity';
 import { Role } from '../enums/role.enum';
 import { AssignmentSubmission } from '../../assignments/entites/assignment-submission.entity';
+import { Notification } from '../../notifications/entities/notification.entity';
+import { Enrollment } from '../../enrollment/entities/enrollment.entity';
+import { Certificate } from '../../certificates/entities/certificate.entity';
 
 @Entity()
 export class User {
@@ -41,6 +44,15 @@ export class User {
 
   @OneToMany(() => AssignmentSubmission, sub => sub.student)
   assignmentSubmissions: AssignmentSubmission[];
+  
+  @OneToMany(() => Notification, (n) => n.user)
+  notifications: Notification[];
+
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.user)
+  enrollments: Enrollment[];
+
+  @OneToMany(() => Certificate, (cert) => cert.user)
+  certificates: Certificate[];
 
   @OneToMany(() => Review, (r) => r.user)
   reviews: Review[];

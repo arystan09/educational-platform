@@ -17,6 +17,9 @@ const progress_entity_1 = require("../../progress/entities/progress.entity");
 const review_entity_1 = require("../../reviews/review.entity");
 const role_enum_1 = require("../enums/role.enum");
 const assignment_submission_entity_1 = require("../../assignments/entites/assignment-submission.entity");
+const notification_entity_1 = require("../../notifications/entities/notification.entity");
+const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
+const certificate_entity_1 = require("../../certificates/entities/certificate.entity");
 let User = class User {
     id;
     name;
@@ -27,6 +30,9 @@ let User = class User {
     courseProgress;
     progress;
     assignmentSubmissions;
+    notifications;
+    enrollments;
+    certificates;
     reviews;
     createdAt;
     updatedAt;
@@ -68,6 +74,18 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => assignment_submission_entity_1.AssignmentSubmission, sub => sub.student),
     __metadata("design:type", Array)
 ], User.prototype, "assignmentSubmissions", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => notification_entity_1.Notification, (n) => n.user),
+    __metadata("design:type", Array)
+], User.prototype, "notifications", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => enrollment_entity_1.Enrollment, (enrollment) => enrollment.user),
+    __metadata("design:type", Array)
+], User.prototype, "enrollments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => certificate_entity_1.Certificate, (cert) => cert.user),
+    __metadata("design:type", Array)
+], User.prototype, "certificates", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => review_entity_1.Review, (r) => r.user),
     __metadata("design:type", Array)

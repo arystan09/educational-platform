@@ -16,6 +16,10 @@ import { ProgressModule } from './api/progress/progress.module';
 import { ReviewsModule } from './api/reviews/reviews.module';
 import { QuizzesModule } from './api/quizzes/quizzes.module';
 import { AssignmentsModule } from './api/assignments/assignments.module';
+import { NotificationsModule } from './api/notifications/notifications.module';
+import { EnrollmentModule } from './api/enrollment/enrollment.module';
+import { CertificateModule } from './api/certificates/certificate.module';
+import { AnalyticsModule } from './api/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -45,7 +49,10 @@ import { AssignmentsModule } from './api/assignments/assignments.module';
     ReviewsModule,
     QuizzesModule,
     AssignmentsModule,
-
+    NotificationsModule,
+    EnrollmentModule,       
+    CertificateModule,   
+    AnalyticsModule,        
   ],
   controllers: [AppController],
   providers: [AppService],

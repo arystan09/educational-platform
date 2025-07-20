@@ -18,6 +18,7 @@ let QuizResult = class QuizResult {
     user;
     quiz;
     score;
+    createdAt;
     completedAt;
 };
 exports.QuizResult = QuizResult;
@@ -37,6 +38,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], QuizResult.prototype, "score", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], QuizResult.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
