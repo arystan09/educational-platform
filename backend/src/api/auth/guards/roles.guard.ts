@@ -16,15 +16,11 @@ export class RolesGuard implements CanActivate {
 
     const { user } = context.switchToHttp().getRequest();
 
-    if (!user) {
-      throw new ForbiddenException('Нет доступа: пользователь не авторизован');
+    if (!user || !user.role) {
+      throw new ForbiddenException('Нет доступа: роль не определена');
     }
 
-    if (!user.roles || !Array.isArray(user.roles)) {
-      throw new ForbiddenException('Нет доступа: роли не определены');
-    }
-
-    const hasAccess = requiredRoles.some((role) => user.roles.includes(role));
+    const hasAccess = requiredRoles.includes(user.role);
 
     if (!hasAccess) {
       throw new ForbiddenException('Недостаточно прав для доступа');

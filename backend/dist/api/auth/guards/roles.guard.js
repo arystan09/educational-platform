@@ -26,13 +26,10 @@ let RolesGuard = class RolesGuard {
         if (!requiredRoles)
             return true;
         const { user } = context.switchToHttp().getRequest();
-        if (!user) {
-            throw new common_1.ForbiddenException('Нет доступа: пользователь не авторизован');
+        if (!user || !user.role) {
+            throw new common_1.ForbiddenException('Нет доступа: роль не определена');
         }
-        if (!user.roles || !Array.isArray(user.roles)) {
-            throw new common_1.ForbiddenException('Нет доступа: роли не определены');
-        }
-        const hasAccess = requiredRoles.some((role) => user.roles.includes(role));
+        const hasAccess = requiredRoles.includes(user.role);
         if (!hasAccess) {
             throw new common_1.ForbiddenException('Недостаточно прав для доступа');
         }

@@ -25,6 +25,7 @@ const notifications_module_1 = require("./api/notifications/notifications.module
 const enrollment_module_1 = require("./api/enrollment/enrollment.module");
 const certificate_module_1 = require("./api/certificates/certificate.module");
 const analytics_module_1 = require("./api/analytics/analytics.module");
+const admin_module_1 = require("./api/admin/admin.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -59,7 +60,7 @@ exports.AppModule = AppModule = __decorate([
             notifications_module_1.NotificationsModule,
             enrollment_module_1.EnrollmentModule,
             certificate_module_1.CertificateModule,
-            analytics_module_1.AnalyticsModule,
+            analytics_module_1.AnalyticsModule, admin_module_1.AdminModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

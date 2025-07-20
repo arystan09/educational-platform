@@ -20,6 +20,7 @@ import { NotificationsModule } from './api/notifications/notifications.module';
 import { EnrollmentModule } from './api/enrollment/enrollment.module';
 import { CertificateModule } from './api/certificates/certificate.module';
 import { AnalyticsModule } from './api/analytics/analytics.module';
+import { AdminModule } from './api/admin/admin.module';
 
 @Module({
   imports: [
@@ -52,7 +53,7 @@ import { AnalyticsModule } from './api/analytics/analytics.module';
     NotificationsModule,
     EnrollmentModule,       
     CertificateModule,   
-    AnalyticsModule,        
+    AnalyticsModule, AdminModule,        
   ],
   controllers: [AppController],
   providers: [AppService],
