@@ -1,6 +1,6 @@
 import { Course } from '../courses/entites/course.entity';
 export declare class Chapter {
-    id: number;
+    id: string;
     title: string;
     content: string;
     videoUrl?: string;

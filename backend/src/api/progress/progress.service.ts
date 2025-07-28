@@ -34,8 +34,7 @@ export class ProgressService {
     private readonly certificateService: CertificateService,
   ) {}
 
-  // ✅ Стандартная отметка главы завершённой
-  async markComplete(userId: number, chapterId: number) {
+  async markComplete(userId: string, chapterId: string) {
     const chapter = await this.chapterRepo.findOne({
       where: { id: chapterId },
       relations: ['course'],
@@ -43,20 +42,22 @@ export class ProgressService {
     if (!chapter) throw new NotFoundException('Глава не найдена');
 
     const exists = await this.progressRepo.findOne({
-      where: { user: { id: userId }, chapter: { id: chapterId } },
+      where: {
+        user: { id: userId },
+        chapter: { id: chapterId },
+      },
     });
     if (exists) return exists;
 
     const progress = this.progressRepo.create({
-      user: { id: userId },
-      chapter,
+      user: { id: userId } as User,
+      chapter: { id: chapterId } as Chapter,
     });
 
     return this.progressRepo.save(progress);
   }
 
-  // ✅ Получить все завершённые главы по курсу
-  async getCompletedChapters(userId: number, courseId: number) {
+  async getCompletedChapters(userId: string, courseId: string) {
     return this.progressRepo.find({
       where: {
         user: { id: userId },
@@ -66,8 +67,7 @@ export class ProgressService {
     });
   }
 
-  // ✅ Получить % прогресса по курсу
-  async getProgressPercent(userId: number, courseId: number) {
+  async getProgressPercent(userId: string, courseId: string) {
     const completed = await this.progressRepo.count({
       where: {
         user: { id: userId },
@@ -84,20 +84,22 @@ export class ProgressService {
     return { completed, total, percent: Math.round(percent) };
   }
 
-  // ✅ Альтернативный подход + генерация сертификата
   async markChapterCompleted(
-    userId: number,
-    courseId: number,
-    chapterId: number,
+    userId: string,
+    courseId: string,
+    chapterId: string,
   ) {
     let progress = await this.courseProgressRepo.findOne({
-      where: { user: { id: userId }, course: { id: courseId } },
+      where: {
+        user: { id: userId },
+        course: { id: courseId },
+      },
     });
 
     if (!progress) {
       progress = this.courseProgressRepo.create({
-        user: { id: userId },
-        course: { id: courseId },
+        user: { id: userId } as User,
+        course: { id: courseId } as Course,
         completedChapters: {},
       });
     }
@@ -116,7 +118,6 @@ export class ProgressService {
 
     progress.isCompleted = allCompleted;
 
-    // ✅ Генерация сертификата
     if (allCompleted && !progress.certificateUrl) {
       const user = await this.userRepo.findOne({ where: { id: userId } });
       if (!user) throw new NotFoundException('Пользователь не найден');
@@ -131,8 +132,7 @@ export class ProgressService {
     return this.courseProgressRepo.save(progress);
   }
 
-  // ✅ Получить сертификат, если курс завершён
-  async getCertificate(userId: number, courseId: number) {
+  async getCertificate(userId: string, courseId: string) {
     const progress = await this.courseProgressRepo.findOne({
       where: {
         user: { id: userId },

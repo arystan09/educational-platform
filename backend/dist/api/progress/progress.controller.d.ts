@@ -3,15 +3,15 @@ import { MarkCompleteDto } from './dto/mark-complete.dto';
 export declare class ProgressController {
     private readonly service;
     constructor(service: ProgressService);
-    markComplete(userId: number, dto: MarkCompleteDto): Promise<import("./entities/progress.entity").Progress>;
-    markChapterCompleted(userId: number, courseId: number, chapterId: number): Promise<import("./entities/course_progress.entity").CourseProgress>;
-    getCompleted(userId: number, courseId: number): Promise<import("./entities/progress.entity").Progress[]>;
-    getPercent(userId: number, courseId: number): Promise<{
+    markComplete(userId: string, dto: MarkCompleteDto): Promise<import("./entities/progress.entity").Progress>;
+    markChapterCompleted(userId: string, courseId: string, chapterId: string): Promise<import("./entities/course_progress.entity").CourseProgress>;
+    getCompleted(userId: string, courseId: string): Promise<import("./entities/progress.entity").Progress[]>;
+    getPercent(userId: string, courseId: string): Promise<{
         completed: number;
         total: number;
         percent: number;
     }>;
-    getCertificate(userId: number, courseId: number): Promise<{
+    getCertificate(userId: string, courseId: string): Promise<{
         certificateUrl: string;
     }>;
 }

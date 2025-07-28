@@ -5,7 +5,7 @@ import { Course } from '../../courses/entites/course.entity';
 @Entity()
 export class CourseProgress {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @ManyToOne(() => User, user => user.courseProgress)
   user: User;

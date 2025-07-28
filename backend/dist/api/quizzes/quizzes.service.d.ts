@@ -12,6 +12,6 @@ export declare class QuizzesService {
     private readonly optionRepo;
     constructor(quizRepo: Repository<Quiz>, resultRepo: Repository<QuizResult>, questionRepo: Repository<QuizQuestion>, optionRepo: Repository<QuizOption>);
     create(dto: CreateQuizDto): Promise<Quiz>;
-    submitQuiz(dto: SubmitQuizDto): Promise<QuizResult>;
-    findOne(id: number): Promise<Quiz | null>;
+    submitQuiz(dto: SubmitQuizDto, userId: string): Promise<QuizResult>;
+    findOne(id: string): Promise<Quiz | null>;
 }

@@ -19,7 +19,7 @@ import { Certificate } from '../../certificates/entities/certificate.entity';
 @Entity()
 export class Course {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   title: string;

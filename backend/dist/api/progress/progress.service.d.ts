@@ -13,15 +13,15 @@ export declare class ProgressService {
     private readonly userRepo;
     private readonly certificateService;
     constructor(progressRepo: Repository<Progress>, chapterRepo: Repository<Chapter>, courseRepo: Repository<Course>, courseProgressRepo: Repository<CourseProgress>, userRepo: Repository<User>, certificateService: CertificateService);
-    markComplete(userId: number, chapterId: number): Promise<Progress>;
-    getCompletedChapters(userId: number, courseId: number): Promise<Progress[]>;
-    getProgressPercent(userId: number, courseId: number): Promise<{
+    markComplete(userId: string, chapterId: string): Promise<Progress>;
+    getCompletedChapters(userId: string, courseId: string): Promise<Progress[]>;
+    getProgressPercent(userId: string, courseId: string): Promise<{
         completed: number;
         total: number;
         percent: number;
     }>;
-    markChapterCompleted(userId: number, courseId: number, chapterId: number): Promise<CourseProgress>;
-    getCertificate(userId: number, courseId: number): Promise<{
+    markChapterCompleted(userId: string, courseId: string, chapterId: string): Promise<CourseProgress>;
+    getCertificate(userId: string, courseId: string): Promise<{
         certificateUrl: string;
     }>;
 }

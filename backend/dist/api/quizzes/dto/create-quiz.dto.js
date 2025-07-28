@@ -50,7 +50,7 @@ __decorate([
 ], CreateQuizDto.prototype, "title", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CreateQuizDto.prototype, "courseId", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),

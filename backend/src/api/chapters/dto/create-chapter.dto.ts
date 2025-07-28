@@ -19,5 +19,5 @@ export class CreateChapterDto {
 
   @IsNotEmpty()
   @IsNumber()
-  courseId: number;
+  courseId: string;
 }

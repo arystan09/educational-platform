@@ -19,6 +19,8 @@ const review_entity_1 = require("./review.entity");
 const typeorm_2 = require("typeorm");
 const course_entity_1 = require("../courses/entites/course.entity");
 const user_entity_1 = require("../users/entities/user.entity");
+const common_2 = require("@nestjs/common");
+const typeorm_3 = require("typeorm");
 let ReviewsService = class ReviewsService {
     reviewRepo;
     courseRepo;
@@ -78,6 +80,31 @@ let ReviewsService = class ReviewsService {
         if (!review)
             throw new common_1.NotFoundException('Отзыв не найден');
         return this.reviewRepo.remove(review);
+    }
+    async findPending() {
+        return this.reviewRepo.find({
+            where: { isApproved: (0, typeorm_3.IsNull)() },
+            relations: ['user', 'course'],
+            order: { createdAt: 'DESC' },
+        });
+    }
+    async approve(id) {
+        const review = await this.reviewRepo.findOne({ where: { id } });
+        if (!review)
+            throw new common_1.NotFoundException('Отзыв не найден');
+        if (review.isApproved === true)
+            throw new common_2.BadRequestException('Отзыв уже одобрен');
+        review.isApproved = true;
+        return this.reviewRepo.save(review);
+    }
+    async reject(id) {
+        const review = await this.reviewRepo.findOne({ where: { id } });
+        if (!review)
+            throw new common_1.NotFoundException('Отзыв не найден');
+        if (review.isApproved === false)
+            throw new common_2.BadRequestException('Отзыв уже отклонён');
+        review.isApproved = false;
+        return this.reviewRepo.save(review);
     }
 };
 exports.ReviewsService = ReviewsService;

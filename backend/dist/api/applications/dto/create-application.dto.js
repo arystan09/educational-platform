@@ -17,6 +17,6 @@ class CreateApplicationDto {
 exports.CreateApplicationDto = CreateApplicationDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CreateApplicationDto.prototype, "courseId", void 0);
 //# sourceMappingURL=create-application.dto.js.map

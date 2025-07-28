@@ -1,7 +1,7 @@
 export declare class SubmitQuizDto {
-    quizId: number;
+    quizId: string;
     answers: {
-        questionId: number;
-        selectedOptionId: number;
+        questionId: string;
+        selectedOptionId: string;
     }[];
 }

@@ -5,4 +5,6 @@ export declare class EnrollmentService {
     constructor(enrollmentRepository: Repository<Enrollment>);
     countAll(): Promise<number>;
     findAll(): Promise<Enrollment[]>;
+    approve(id: string): Promise<Enrollment>;
+    reject(id: string): Promise<Enrollment>;
 }

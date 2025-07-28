@@ -2,11 +2,11 @@ import { IsArray, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class SubmitQuizDto {
   @IsNumber()
-  quizId: number;
+  quizId: string;
 
   @IsArray()
   answers: {
-    questionId: number;
-    selectedOptionId: number;
+    questionId: string;
+    selectedOptionId: string;
   }[];
 }

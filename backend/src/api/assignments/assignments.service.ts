@@ -26,8 +26,9 @@ export class AssignmentsService {
 
   async createAssignment(dto: CreateAssignmentDto): Promise<Assignment> {
     const course = await this.courseRepo.findOne({
-      where: { id: Number(dto.courseId) },
-    });
+    where: { id: dto.courseId },
+  });
+
 
     if (!course) throw new NotFoundException('Курс не найден');
 
@@ -83,7 +84,7 @@ export class AssignmentsService {
 
   async getAssignmentsForCourse(courseId: string): Promise<Assignment[]> {
     return this.assignmentRepo.find({
-      where: { course: { id: Number(courseId) } },
+      where: { course: { id: courseId } },
       relations: ['submissions'],
     });
   }

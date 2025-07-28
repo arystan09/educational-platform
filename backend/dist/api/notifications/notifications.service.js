@@ -29,7 +29,7 @@ let NotificationsService = class NotificationsService {
         this.mailService = mailService;
     }
     async create(dto) {
-        const user = await this.usersService.findById(+dto.userId);
+        const user = await this.usersService.findById(dto.userId);
         if (!user)
             throw new Error('User not found');
         const notification = this.notificationsRepo.create({
@@ -45,7 +45,7 @@ let NotificationsService = class NotificationsService {
     }
     async findAll(userId) {
         return this.notificationsRepo.find({
-            where: { user: { id: +userId } },
+            where: { user: { id: userId } },
             order: { createdAt: 'DESC' },
         });
     }

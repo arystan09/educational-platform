@@ -61,7 +61,7 @@ __decorate([
     __param(0, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __param(1, (0, user_id_decorator_1.UserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, user_entity_1.User]),
+    __metadata("design:paramtypes", [String, user_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], ChaptersController.prototype, "findByCourse", null);
 __decorate([
@@ -80,7 +80,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, create_chapter_dto_1.CreateChapterDto]),
+    __metadata("design:paramtypes", [String, create_chapter_dto_1.CreateChapterDto]),
     __metadata("design:returntype", void 0)
 ], ChaptersController.prototype, "update", null);
 __decorate([
@@ -89,7 +89,7 @@ __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ChaptersController.prototype, "delete", null);
 exports.ChaptersController = ChaptersController = __decorate([

@@ -11,7 +11,7 @@ import { Course } from '../courses/entites/course.entity';
 @Entity()
 export class Chapter {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   title: string;

@@ -45,13 +45,16 @@ let ProgressService = class ProgressService {
         if (!chapter)
             throw new common_1.NotFoundException('Глава не найдена');
         const exists = await this.progressRepo.findOne({
-            where: { user: { id: userId }, chapter: { id: chapterId } },
+            where: {
+                user: { id: userId },
+                chapter: { id: chapterId },
+            },
         });
         if (exists)
             return exists;
         const progress = this.progressRepo.create({
             user: { id: userId },
-            chapter,
+            chapter: { id: chapterId },
         });
         return this.progressRepo.save(progress);
     }
@@ -80,7 +83,10 @@ let ProgressService = class ProgressService {
     }
     async markChapterCompleted(userId, courseId, chapterId) {
         let progress = await this.courseProgressRepo.findOne({
-            where: { user: { id: userId }, course: { id: courseId } },
+            where: {
+                user: { id: userId },
+                course: { id: courseId },
+            },
         });
         if (!progress) {
             progress = this.courseProgressRepo.create({

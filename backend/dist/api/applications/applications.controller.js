@@ -46,7 +46,7 @@ __decorate([
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, create_application_dto_1.CreateApplicationDto]),
+    __metadata("design:paramtypes", [String, create_application_dto_1.CreateApplicationDto]),
     __metadata("design:returntype", void 0)
 ], ApplicationsController.prototype, "apply", null);
 __decorate([
@@ -54,7 +54,7 @@ __decorate([
     (0, common_1.Get)('my'),
     __param(0, (0, user_id_decorator_1.UserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ApplicationsController.prototype, "getMyApplications", null);
 __decorate([
@@ -72,7 +72,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)('status')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ApplicationsController.prototype, "changeStatus", null);
 exports.ApplicationsController = ApplicationsController = __decorate([

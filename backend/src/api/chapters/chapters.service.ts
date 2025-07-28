@@ -1,7 +1,6 @@
 import {
   Injectable,
   NotFoundException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -18,7 +17,7 @@ export class ChaptersService {
     private courseRepo: Repository<Course>,
   ) {}
 
-  async findByCourse(courseId: number) {
+  async findByCourse(courseId: string) {
     return this.chapterRepo.find({
       where: { course: { id: courseId } },
       order: { order: 'ASC' },
@@ -33,7 +32,7 @@ export class ChaptersService {
     return this.chapterRepo.save(chapter);
   }
 
-  async update(id: number, dto: CreateChapterDto) {
+  async update(id: string, dto: CreateChapterDto) {
     const chapter = await this.chapterRepo.findOne({ where: { id } });
     if (!chapter) throw new NotFoundException('Глава не найдена');
 
@@ -41,7 +40,7 @@ export class ChaptersService {
     return this.chapterRepo.save(chapter);
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     const result = await this.chapterRepo.delete(id);
     if (result.affected === 0) throw new NotFoundException('Глава не найдена');
     return { message: 'Удалено' };

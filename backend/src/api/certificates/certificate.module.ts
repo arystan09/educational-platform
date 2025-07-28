@@ -3,6 +3,6 @@ import { CertificateService } from './certificate.service';
 
 @Module({
   providers: [CertificateService],
-  exports: [CertificateService], // экспортируем для использования в других модулях
+  exports: [CertificateService],
 })
 export class CertificateModule {}

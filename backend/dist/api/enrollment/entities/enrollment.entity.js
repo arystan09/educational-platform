@@ -13,12 +13,14 @@ exports.Enrollment = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../../users/entities/user.entity");
 const course_entity_1 = require("../../courses/entites/course.entity");
+const enrollment_status_enum_1 = require("../enums/enrollment-status.enum");
 let Enrollment = class Enrollment {
     id;
     user;
     course;
     createdAt;
     completed;
+    status;
 };
 exports.Enrollment = Enrollment;
 __decorate([
@@ -41,6 +43,10 @@ __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], Enrollment.prototype, "completed", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'enum', enum: enrollment_status_enum_1.EnrollmentStatus, default: enrollment_status_enum_1.EnrollmentStatus.PENDING }),
+    __metadata("design:type", String)
+], Enrollment.prototype, "status", void 0);
 exports.Enrollment = Enrollment = __decorate([
     (0, typeorm_1.Entity)()
 ], Enrollment);

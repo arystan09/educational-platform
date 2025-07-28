@@ -50,7 +50,7 @@ __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], CoursesController.prototype, "findOne", null);
 __decorate([
@@ -71,7 +71,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, current_user_decorator_1.CurrentUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, create_course_dto_1.CreateCourseDto,
+    __metadata("design:paramtypes", [String, create_course_dto_1.CreateCourseDto,
         user_entity_1.User]),
     __metadata("design:returntype", void 0)
 ], CoursesController.prototype, "update", null);

@@ -22,28 +22,28 @@ export class ReviewsController {
   @UseGuards(AuthGuard('jwt'))
   @Post(':courseId')
   createOrUpdate(
-    @UserId() userId: number,
-    @Param('courseId', ParseIntPipe) courseId: number,
+    @UserId() userId: string,
+    @Param('courseId', ParseIntPipe) courseId: string,
     @Body() dto: CreateReviewDto,
   ) {
     return this.service.createOrUpdate(userId, courseId, dto);
   }
 
   @Get('course/:courseId')
-  getByCourse(@Param('courseId', ParseIntPipe) courseId: number) {
+  getByCourse(@Param('courseId', ParseIntPipe) courseId: string) {
     return this.service.findByCourse(courseId);
   }
 
   @Get('average/:courseId')
-  getAverage(@Param('courseId', ParseIntPipe) courseId: number) {
+  getAverage(@Param('courseId', ParseIntPipe) courseId: string) {
     return this.service.getAverageRating(courseId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete(':courseId')
   delete(
-    @UserId() userId: number,
-    @Param('courseId', ParseIntPipe) courseId: number,
+    @UserId() userId: string,
+    @Param('courseId', ParseIntPipe) courseId: string,
   ) {
     return this.service.delete(userId, courseId);
   }

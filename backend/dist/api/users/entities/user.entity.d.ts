@@ -8,7 +8,7 @@ import { Notification } from '../../notifications/entities/notification.entity';
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 export declare class User {
-    id: number;
+    id: string;
     name: string;
     email: string;
     password: string;

@@ -33,4 +33,5 @@ export declare class AnalyticsService {
         reviewed: number;
         pending: number;
     }>;
+    getPlatformStats(): Promise<any>;
 }

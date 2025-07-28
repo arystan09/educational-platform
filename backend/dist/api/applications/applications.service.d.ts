@@ -8,8 +8,8 @@ export declare class ApplicationsService {
     private courseRepo;
     private userRepo;
     constructor(appRepo: Repository<Application>, courseRepo: Repository<Course>, userRepo: Repository<User>);
-    apply(userId: number, courseId: number): Promise<Application>;
-    getUserApplications(userId: number): Promise<Application[]>;
+    apply(userId: string, courseId: string): Promise<Application>;
+    getUserApplications(userId: string): Promise<Application[]>;
     getAllApplications(): Promise<Application[]>;
-    changeStatus(id: number, status: ApplicationStatus): Promise<Application>;
+    changeStatus(id: string, status: ApplicationStatus): Promise<Application>;
 }

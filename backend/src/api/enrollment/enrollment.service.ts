@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Enrollment } from './entities/enrollment.entity';
+import { EnrollmentStatus } from './enums/enrollment-status.enum';
 
 @Injectable()
 export class EnrollmentService {
@@ -18,5 +19,21 @@ export class EnrollmentService {
     return this.enrollmentRepository.find({
       relations: ['user', 'course'],
     });
+  }
+
+  async approve(id: string): Promise<Enrollment> {
+    const enrollment = await this.enrollmentRepository.findOneBy({ id });
+    if (!enrollment) throw new NotFoundException('Enrollment not found');
+
+    enrollment.status = EnrollmentStatus.APPROVED;
+    return this.enrollmentRepository.save(enrollment);
+  }
+
+  async reject(id: string): Promise<Enrollment> {
+    const enrollment = await this.enrollmentRepository.findOneBy({ id });
+    if (!enrollment) throw new NotFoundException('Enrollment not found');
+
+    enrollment.status = EnrollmentStatus.REJECTED;
+    return this.enrollmentRepository.save(enrollment);
   }
 }

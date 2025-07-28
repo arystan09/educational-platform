@@ -1,6 +1,6 @@
 import { QuizQuestion } from './quiz-question.entity';
 export declare class QuizOption {
-    id: number;
+    id: string;
     text: string;
     isCorrect: boolean;
     question: QuizQuestion;

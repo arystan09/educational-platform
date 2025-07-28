@@ -1,39 +1,94 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from './entites/course.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class CoursesService {
   constructor(
     @InjectRepository(Course)
-    private courseRepo: Repository<Course>,
+    private readonly courseRepository: Repository<Course>,
   ) {}
 
   async findAll() {
-    return this.courseRepo.find({ where: { isPublished: true } });
+    return this.courseRepository.find({
+      where: { isPublished: true },
+      relations: ['createdBy'],
+    });
   }
 
-  async findOne(id: number) {
-    const course = await this.courseRepo.findOne({ where: { id } });
+  async findOne(id: string) {
+    const course = await this.courseRepository.findOne({
+      where: { id },
+      relations: ['createdBy'],
+    });
     if (!course) throw new NotFoundException('Курс не найден');
     return course;
   }
 
   async create(dto: CreateCourseDto, creator: User) {
-    const course = this.courseRepo.create({ ...dto, createdBy: creator });
-    return this.courseRepo.save(course);
+    const course = this.courseRepository.create({
+      ...dto,
+      createdBy: creator,
+    });
+    return this.courseRepository.save(course);
   }
 
-  async update(id: number, dto: CreateCourseDto, user: User) {
-    const course = await this.courseRepo.findOneBy({ id });
+  async update(id: string, dto: UpdateCourseDto, user: User) {
+    const course = await this.courseRepository.findOne({
+      where: { id },
+      relations: ['createdBy'],
+    });
+
     if (!course) throw new NotFoundException('Курс не найден');
-    if (course.createdBy.id !== user.id && user.role !== 'ADMIN') {
-      throw new Error('Недостаточно прав');
+
+    if (course.createdBy?.id !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('Недостаточно прав для редактирования');
     }
+
     Object.assign(course, dto);
-    return this.courseRepo.save(course);
+    return this.courseRepository.save(course);
+  }
+
+  async delete(id: string, user: User): Promise<void> {
+    const course = await this.courseRepository.findOne({
+      where: { id },
+      relations: ['createdBy'],
+    });
+
+    if (!course) {
+      throw new NotFoundException('Курс не найден');
+    }
+
+    if (course.createdBy?.id !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('Недостаточно прав для удаления');
+    }
+
+    await this.courseRepository.remove(course);
+  }
+
+  async publish(id: string, user: User): Promise<Course> {
+    const course = await this.courseRepository.findOne({
+      where: { id },
+      relations: ['createdBy'],
+    });
+
+    if (!course) {
+      throw new NotFoundException('Курс не найден');
+    }
+
+    if (course.createdBy?.id !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('Недостаточно прав для публикации');
+    }
+
+    course.isPublished = true;
+    return this.courseRepository.save(course);
   }
 }

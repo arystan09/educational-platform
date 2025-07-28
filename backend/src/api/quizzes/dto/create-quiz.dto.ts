@@ -24,7 +24,7 @@ export class CreateQuizDto {
   title: string;
 
   @IsNotEmpty()
-  courseId: number;
+  courseId: string;
 
   @IsArray()
   @ValidateNested({ each: true })

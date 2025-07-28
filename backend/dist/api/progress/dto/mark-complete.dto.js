@@ -17,6 +17,6 @@ class MarkCompleteDto {
 exports.MarkCompleteDto = MarkCompleteDto;
 __decorate([
     (0, class_validator_1.IsInt)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], MarkCompleteDto.prototype, "chapterId", void 0);
 //# sourceMappingURL=mark-complete.dto.js.map

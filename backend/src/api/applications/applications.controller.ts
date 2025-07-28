@@ -26,13 +26,13 @@ export class ApplicationsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  apply(@UserId() userId: number, @Body() dto: CreateApplicationDto) {
+  apply(@UserId() userId: string, @Body() dto: CreateApplicationDto) {
     return this.service.apply(userId, dto.courseId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('my')
-  getMyApplications(@UserId() userId: number) {
+  getMyApplications(@UserId() userId: string) {
     return this.service.getUserApplications(userId);
   }
 
@@ -46,7 +46,7 @@ export class ApplicationsController {
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   @Patch(':id/status')
-  changeStatus(@Param('id', ParseIntPipe) id: number, @Body('status') status: ApplicationStatus) {
+  changeStatus(@Param('id', ParseIntPipe) id: string, @Body('status') status: ApplicationStatus) {
     return this.service.changeStatus(id, status);
   }
 }

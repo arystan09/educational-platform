@@ -19,7 +19,7 @@ import { Certificate } from '../../certificates/entities/certificate.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column({ type: 'varchar', nullable: false, default: 'Unnamed' })
   name: string;

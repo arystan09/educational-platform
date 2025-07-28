@@ -1,3 +1,3 @@
 export declare class CreateApplicationDto {
-    courseId: number;
+    courseId: string;
 }

@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const analytics_service_1 = require("./analytics.service");
 const analytics_controller_1 = require("./analytics.controller");
+const admin_analytics_controller_1 = require("../admin/admin-analytics.controller");
 const user_entity_1 = require("../users/entities/user.entity");
 const course_entity_1 = require("../courses/entites/course.entity");
 const enrollment_entity_1 = require("../enrollment/entities/enrollment.entity");
@@ -32,7 +33,7 @@ exports.AnalyticsModule = AnalyticsModule = __decorate([
                 assignment_submission_entity_1.AssignmentSubmission,
             ]),
         ],
-        controllers: [analytics_controller_1.AnalyticsController],
+        controllers: [analytics_controller_1.AnalyticsController, admin_analytics_controller_1.AdminAnalyticsController],
         providers: [analytics_service_1.AnalyticsService],
     })
 ], AnalyticsModule);

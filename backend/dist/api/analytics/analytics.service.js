@@ -98,6 +98,30 @@ let AnalyticsService = class AnalyticsService {
             pending,
         };
     }
+    async getPlatformStats() {
+        const now = new Date();
+        const lastMonth = new Date();
+        lastMonth.setMonth(now.getMonth() - 1);
+        const dateRange = {
+            from: lastMonth.toISOString(),
+            to: now.toISOString(),
+        };
+        const [userStats, courseStats, quizStats, certificateStats, assignmentStats,] = await Promise.all([
+            this.getUserStats(dateRange),
+            this.getCourseStats(dateRange),
+            this.getQuizStats(dateRange),
+            this.getCertificateStats(dateRange),
+            this.getAssignmentStats(dateRange),
+        ]);
+        return {
+            users: userStats,
+            courses: courseStats,
+            quizzes: quizStats,
+            certificates: certificateStats,
+            assignments: assignmentStats,
+            dateRange,
+        };
+    }
 };
 exports.AnalyticsService = AnalyticsService;
 exports.AnalyticsService = AnalyticsService = __decorate([

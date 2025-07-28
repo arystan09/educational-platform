@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const enrollment_entity_1 = require("./entities/enrollment.entity");
+const enrollment_status_enum_1 = require("./enums/enrollment-status.enum");
 let EnrollmentService = class EnrollmentService {
     enrollmentRepository;
     constructor(enrollmentRepository) {
@@ -29,6 +30,20 @@ let EnrollmentService = class EnrollmentService {
         return this.enrollmentRepository.find({
             relations: ['user', 'course'],
         });
+    }
+    async approve(id) {
+        const enrollment = await this.enrollmentRepository.findOneBy({ id });
+        if (!enrollment)
+            throw new common_1.NotFoundException('Enrollment not found');
+        enrollment.status = enrollment_status_enum_1.EnrollmentStatus.APPROVED;
+        return this.enrollmentRepository.save(enrollment);
+    }
+    async reject(id) {
+        const enrollment = await this.enrollmentRepository.findOneBy({ id });
+        if (!enrollment)
+            throw new common_1.NotFoundException('Enrollment not found');
+        enrollment.status = enrollment_status_enum_1.EnrollmentStatus.REJECTED;
+        return this.enrollmentRepository.save(enrollment);
     }
 };
 exports.EnrollmentService = EnrollmentService;

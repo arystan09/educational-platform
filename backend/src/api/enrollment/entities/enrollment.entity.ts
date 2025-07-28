@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Course } from '../../courses/entites/course.entity';
+import { EnrollmentStatus } from '../enums/enrollment-status.enum';
 
 @Entity()
 export class Enrollment {
@@ -24,4 +25,7 @@ export class Enrollment {
 
   @Column({ default: false })
   completed: boolean;
+
+  @Column({ type: 'enum', enum: EnrollmentStatus, default: EnrollmentStatus.PENDING })
+  status: EnrollmentStatus;
 }

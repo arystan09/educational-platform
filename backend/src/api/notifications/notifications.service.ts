@@ -17,7 +17,7 @@ export class NotificationsService {
   ) {}
 
   async create(dto: CreateNotificationDto): Promise<Notification> {
-    const user = await this.usersService.findById(+dto.userId);
+    const user = await this.usersService.findById(dto.userId);
     if (!user) throw new Error('User not found');
 
     const notification = this.notificationsRepo.create({
@@ -42,7 +42,7 @@ export class NotificationsService {
 
   async findAll(userId: string): Promise<Notification[]> {
     return this.notificationsRepo.find({
-      where: { user: { id: +userId } },
+      where: { user: { id: userId } },
       order: { createdAt: 'DESC' },
     });
   }

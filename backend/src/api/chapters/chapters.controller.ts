@@ -33,7 +33,7 @@ export class ChaptersController {
   @Get('course/:courseId')
   @UseGuards(AuthGuard('jwt'))
   async findByCourse(
-    @Param('courseId', ParseIntPipe) courseId: number,
+    @Param('courseId', ParseIntPipe) courseId: string,
     @UserId() user: User,
   ) {
     const application = await this.applicationRepo.findOne({
@@ -61,14 +61,14 @@ export class ChaptersController {
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateChapterDto) {
+  update(@Param('id', ParseIntPipe) id: string, @Body() dto: CreateChapterDto) {
     return this.chaptersService.update(id, dto);
   }
 
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN')
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param('id', ParseIntPipe) id: string) {
     return this.chaptersService.delete(id);
   }
 }

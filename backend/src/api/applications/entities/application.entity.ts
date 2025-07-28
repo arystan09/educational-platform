@@ -17,7 +17,7 @@ export enum ApplicationStatus {
 @Entity()
 export class Application {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @ManyToOne(() => User, { eager: true })
   user: User;

@@ -7,7 +7,7 @@ import { Assignment } from '../../assignments/entites/assignment.entity';
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 export declare class Course {
-    id: number;
+    id: string;
     title: string;
     description: string;
     thumbnailUrl?: string;

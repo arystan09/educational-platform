@@ -26,7 +26,7 @@ let CourseProgress = class CourseProgress {
 exports.CourseProgress = CourseProgress;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CourseProgress.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.courseProgress),

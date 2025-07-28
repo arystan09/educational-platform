@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as PDFDocument from 'pdfkit';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -7,12 +7,13 @@ import { Course } from '../courses/entites/course.entity';
 
 @Injectable()
 export class CertificateService {
+  private certsDir = path.resolve(__dirname, '..', '..', 'certificates');
+
   async generate(user: User, course: Course): Promise<string> {
-    const certsDir = path.resolve(__dirname, '..', '..', 'certificates');
-    if (!fs.existsSync(certsDir)) fs.mkdirSync(certsDir);
+    if (!fs.existsSync(this.certsDir)) fs.mkdirSync(this.certsDir);
 
     const fileName = `${user.id}_${course.id}_${Date.now()}.pdf`;
-    const filePath = path.join(certsDir, fileName);
+    const filePath = path.join(this.certsDir, fileName);
 
     const doc = new PDFDocument();
     doc.pipe(fs.createWriteStream(filePath));
@@ -29,5 +30,21 @@ export class CertificateService {
     doc.end();
 
     return `/certificates/${fileName}`;
+  }
+
+  // 🔍 Получить список всех сертификатов (файлов)
+  findAll(): string[] {
+    if (!fs.existsSync(this.certsDir)) return [];
+    return fs.readdirSync(this.certsDir).filter(f => f.endsWith('.pdf'));
+  }
+
+  // ❌ Удалить сертификат по имени файла
+  remove(fileName: string): string {
+    const filePath = path.join(this.certsDir, fileName);
+    if (!fs.existsSync(filePath)) {
+      throw new NotFoundException('Certificate not found');
+    }
+    fs.unlinkSync(filePath);
+    return 'Certificate deleted';
   }
 }

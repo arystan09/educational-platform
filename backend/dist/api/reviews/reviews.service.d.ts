@@ -7,8 +7,11 @@ export declare class ReviewsService {
     private readonly courseRepo;
     private readonly userRepo;
     constructor(reviewRepo: Repository<Review>, courseRepo: Repository<Course>, userRepo: Repository<User>);
-    createOrUpdate(userId: number, courseId: number, dto: Partial<Review>): Promise<Review>;
-    findByCourse(courseId: number): Promise<Review[]>;
-    getAverageRating(courseId: number): Promise<number>;
-    delete(userId: number, courseId: number): Promise<Review>;
+    createOrUpdate(userId: string, courseId: string, dto: Partial<Review>): Promise<Review>;
+    findByCourse(courseId: string): Promise<Review[]>;
+    getAverageRating(courseId: string): Promise<number>;
+    delete(userId: string, courseId: string): Promise<Review>;
+    findPending(): Promise<Review[]>;
+    approve(id: string): Promise<Review>;
+    reject(id: string): Promise<Review>;
 }

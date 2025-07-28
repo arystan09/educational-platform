@@ -3,5 +3,5 @@ export declare class CreateChapterDto {
     content: string;
     videoUrl?: string;
     order: number;
-    courseId: number;
+    courseId: string;
 }

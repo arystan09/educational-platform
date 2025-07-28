@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnalyticsService } from './analytics.service';
 import { AnalyticsController } from './analytics.controller';
+import { AdminAnalyticsController } from '../admin/admin-analytics.controller';
 import { User } from '../users/entities/user.entity';
 import { Course } from '../courses/entites/course.entity';
 import { Enrollment } from '../enrollment/entities/enrollment.entity';
@@ -20,7 +21,7 @@ import { AssignmentSubmission } from '../assignments/entites/assignment-submissi
       AssignmentSubmission,
     ]),
   ],
-  controllers: [AnalyticsController],
+  controllers: [AnalyticsController, AdminAnalyticsController],
   providers: [AnalyticsService],
 })
 export class AnalyticsModule {}

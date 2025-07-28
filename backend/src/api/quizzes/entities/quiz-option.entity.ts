@@ -4,7 +4,7 @@ import { QuizQuestion } from './quiz-question.entity';
 @Entity()
 export class QuizOption {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   text: string;

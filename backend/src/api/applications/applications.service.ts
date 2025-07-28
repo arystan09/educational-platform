@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, ConflictException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Application } from '../applications/entities/application.entity'; // путь уточни, если отличается
+import { Application } from '../applications/entities/application.entity';
 import { Course } from '../courses/entites/course.entity';
 import { User } from '../users/entities/user.entity';
 import { ApplicationStatus } from './entities/application.entity';
@@ -20,7 +20,7 @@ export class ApplicationsService {
     private userRepo: Repository<User>,
   ) {}
 
-  async apply(userId: number, courseId: number) {
+  async apply(userId: string, courseId: string) {
     const course = await this.courseRepo.findOneBy({ id: courseId });
     if (!course) throw new NotFoundException('Курс не найден');
 
@@ -35,7 +35,7 @@ export class ApplicationsService {
     return this.appRepo.save(application);
   }
 
-  async getUserApplications(userId: number) {
+  async getUserApplications(userId: string) {
     return this.appRepo.find({ where: { user: { id: userId } } });
   }
 
@@ -43,7 +43,7 @@ export class ApplicationsService {
     return this.appRepo.find();
   }
 
-  async changeStatus(id: number, status: ApplicationStatus) {
+  async changeStatus(id: string, status: ApplicationStatus) {
     const app = await this.appRepo.findOneBy({ id });
     if (!app) throw new NotFoundException('Заявка не найдена');
 

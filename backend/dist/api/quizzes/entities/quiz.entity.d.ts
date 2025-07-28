@@ -1,7 +1,7 @@
 import { Course } from '../../courses/entites/course.entity';
 import { QuizQuestion } from './quiz-question.entity';
 export declare class Quiz {
-    id: number;
+    id: string;
     title: string;
     course: Course;
     questions: QuizQuestion[];

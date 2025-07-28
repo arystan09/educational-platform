@@ -18,39 +18,39 @@ export class ProgressController {
   constructor(private readonly service: ProgressService) {}
 
   @Post('complete')
-  markComplete(@UserId() userId: number, @Body() dto: MarkCompleteDto) {
+  markComplete(@UserId() userId: string, @Body() dto: MarkCompleteDto) {
     return this.service.markComplete(userId, dto.chapterId);
   }
 
   @Post('complete/:courseId/:chapterId')
   markChapterCompleted(
-    @UserId() userId: number,
-    @Param('courseId', ParseIntPipe) courseId: number,
-    @Param('chapterId', ParseIntPipe) chapterId: number,
+    @UserId() userId: string,
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Param('chapterId', ParseIntPipe) chapterId: string,
   ) {
     return this.service.markChapterCompleted(userId, courseId, chapterId);
   }
 
   @Get('completed/:courseId')
   getCompleted(
-    @UserId() userId: number,
-    @Param('courseId', ParseIntPipe) courseId: number,
+    @UserId() userId: string,
+    @Param('courseId', ParseIntPipe) courseId: string,
   ) {
     return this.service.getCompletedChapters(userId, courseId);
   }
 
   @Get('percent/:courseId')
   getPercent(
-    @UserId() userId: number,
-    @Param('courseId', ParseIntPipe) courseId: number,
+    @UserId() userId: string,
+    @Param('courseId', ParseIntPipe) courseId: string,
   ) {
     return this.service.getProgressPercent(userId, courseId);
   }
 
   @Get('certificate/:courseId')
   getCertificate(
-    @UserId() userId: number,
-    @Param('courseId', ParseIntPipe) courseId: number,
+    @UserId() userId: string,
+    @Param('courseId', ParseIntPipe) courseId: string,
   ) {
     return this.service.getCertificate(userId, courseId);
   }

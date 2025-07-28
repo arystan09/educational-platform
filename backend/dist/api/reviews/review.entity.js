@@ -21,11 +21,12 @@ let Review = class Review {
     course;
     createdAt;
     updatedAt;
+    isApproved;
 };
 exports.Review = Review;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Review.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'int', width: 1 }),
@@ -51,6 +52,10 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Review.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', nullable: true }),
+    __metadata("design:type", Object)
+], Review.prototype, "isApproved", void 0);
 exports.Review = Review = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.Unique)(['user', 'course'])

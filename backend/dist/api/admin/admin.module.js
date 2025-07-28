@@ -13,13 +13,29 @@ const admin_controller_1 = require("./admin.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../users/entities/user.entity");
 const course_entity_1 = require("../courses/entites/course.entity");
+const admin_courses_controller_1 = require("./admin-courses.controller");
+const courses_module_1 = require("../courses/courses.module");
+const admin_requests_controller_1 = require("./admin-requests.controller");
+const enrollment_module_1 = require("../enrollment/enrollment.module");
+const admin_reviews_controller_1 = require("./admin-reviews.controller");
+const reviews_module_1 = require("../reviews/reviews.module");
+const admin_certificates_controller_1 = require("./admin-certificates.controller");
+const certificate_module_1 = require("../certificates/certificate.module");
+const analytics_module_1 = require("../analytics/analytics.module");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, course_entity_1.Course])],
-        controllers: [admin_controller_1.AdminController],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, course_entity_1.Course]),
+            courses_module_1.CoursesModule,
+            enrollment_module_1.EnrollmentModule,
+            reviews_module_1.ReviewsModule,
+            certificate_module_1.CertificateModule,
+            analytics_module_1.AnalyticsModule,
+        ],
+        controllers: [admin_controller_1.AdminController, admin_courses_controller_1.AdminCoursesController, admin_requests_controller_1.AdminRequestsController, admin_reviews_controller_1.AdminReviewsController, admin_certificates_controller_1.AdminCertificatesController],
         providers: [admin_service_1.AdminService],
     })
 ], AdminModule);

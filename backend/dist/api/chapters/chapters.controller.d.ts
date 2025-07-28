@@ -7,10 +7,10 @@ export declare class ChaptersController {
     private readonly chaptersService;
     private readonly applicationRepo;
     constructor(chaptersService: ChaptersService, applicationRepo: Repository<Application>);
-    findByCourse(courseId: number, user: User): Promise<import("./chapter.entity").Chapter[]>;
+    findByCourse(courseId: string, user: User): Promise<import("./chapter.entity").Chapter[]>;
     create(dto: CreateChapterDto): Promise<import("./chapter.entity").Chapter>;
-    update(id: number, dto: CreateChapterDto): Promise<import("./chapter.entity").Chapter>;
-    delete(id: number): Promise<{
+    update(id: string, dto: CreateChapterDto): Promise<import("./chapter.entity").Chapter>;
+    delete(id: string): Promise<{
         message: string;
     }>;
 }

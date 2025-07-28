@@ -18,32 +18,71 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const course_entity_1 = require("./entites/course.entity");
 let CoursesService = class CoursesService {
-    courseRepo;
-    constructor(courseRepo) {
-        this.courseRepo = courseRepo;
+    courseRepository;
+    constructor(courseRepository) {
+        this.courseRepository = courseRepository;
     }
     async findAll() {
-        return this.courseRepo.find({ where: { isPublished: true } });
+        return this.courseRepository.find({
+            where: { isPublished: true },
+            relations: ['createdBy'],
+        });
     }
     async findOne(id) {
-        const course = await this.courseRepo.findOne({ where: { id } });
+        const course = await this.courseRepository.findOne({
+            where: { id },
+            relations: ['createdBy'],
+        });
         if (!course)
             throw new common_1.NotFoundException('Курс не найден');
         return course;
     }
     async create(dto, creator) {
-        const course = this.courseRepo.create({ ...dto, createdBy: creator });
-        return this.courseRepo.save(course);
+        const course = this.courseRepository.create({
+            ...dto,
+            createdBy: creator,
+        });
+        return this.courseRepository.save(course);
     }
     async update(id, dto, user) {
-        const course = await this.courseRepo.findOneBy({ id });
+        const course = await this.courseRepository.findOne({
+            where: { id },
+            relations: ['createdBy'],
+        });
         if (!course)
             throw new common_1.NotFoundException('Курс не найден');
-        if (course.createdBy.id !== user.id && user.role !== 'ADMIN') {
-            throw new Error('Недостаточно прав');
+        if (course.createdBy?.id !== user.id && user.role !== 'ADMIN') {
+            throw new common_1.ForbiddenException('Недостаточно прав для редактирования');
         }
         Object.assign(course, dto);
-        return this.courseRepo.save(course);
+        return this.courseRepository.save(course);
+    }
+    async delete(id, user) {
+        const course = await this.courseRepository.findOne({
+            where: { id },
+            relations: ['createdBy'],
+        });
+        if (!course) {
+            throw new common_1.NotFoundException('Курс не найден');
+        }
+        if (course.createdBy?.id !== user.id && user.role !== 'ADMIN') {
+            throw new common_1.ForbiddenException('Недостаточно прав для удаления');
+        }
+        await this.courseRepository.remove(course);
+    }
+    async publish(id, user) {
+        const course = await this.courseRepository.findOne({
+            where: { id },
+            relations: ['createdBy'],
+        });
+        if (!course) {
+            throw new common_1.NotFoundException('Курс не найден');
+        }
+        if (course.createdBy?.id !== user.id && user.role !== 'ADMIN') {
+            throw new common_1.ForbiddenException('Недостаточно прав для публикации');
+        }
+        course.isPublished = true;
+        return this.courseRepository.save(course);
     }
 };
 exports.CoursesService = CoursesService;

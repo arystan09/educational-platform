@@ -14,10 +14,10 @@ import { Course } from '../courses/entites/course.entity';
 @Unique(['user', 'course'])
 export class Review {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column({ type: 'int', width: 1 })
-  rating: number; // 1-5
+  rating: number;
 
   @Column({ type: 'text', nullable: true })
   comment: string;
@@ -33,4 +33,7 @@ export class Review {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'boolean', nullable: true })
+  isApproved: boolean | null;
 }

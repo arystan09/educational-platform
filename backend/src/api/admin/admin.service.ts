@@ -20,15 +20,15 @@ export class AdminService {
   }
 
   async updateUserRole(id: string, dto: UpdateUserRoleDto) {
-    const user = await this.userRepo.findOne({ where: { id: Number(id) } });
+    const user = await this.userRepo.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
     user.role = dto.role;
     return this.userRepo.save(user);
   }
 
   async grantCourseAccess(dto: GrantCourseAccessDto) {
-    const user = await this.userRepo.findOne({ where: { id: Number(dto.userId) }, relations: ['enrollments'] });
-    const course = await this.courseRepo.findOne({ where: { id: Number(dto.courseId) } });
+    const user = await this.userRepo.findOne({ where: { id: dto.userId }, relations: ['enrollments'] });
+    const course = await this.courseRepo.findOne({ where: { id: dto.courseId } });
 
     if (!user || !course) throw new NotFoundException('User or Course not found');
 

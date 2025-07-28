@@ -6,7 +6,7 @@ export declare enum ApplicationStatus {
     REJECTED = "REJECTED"
 }
 export declare class Application {
-    id: number;
+    id: string;
     user: User;
     course: Course;
     status: ApplicationStatus;

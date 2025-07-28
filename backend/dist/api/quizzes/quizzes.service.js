@@ -45,7 +45,7 @@ let QuizzesService = class QuizzesService {
         });
         return await this.quizRepo.save(quiz);
     }
-    async submitQuiz(dto) {
+    async submitQuiz(dto, userId) {
         const quiz = await this.quizRepo.findOne({
             where: { id: dto.quizId },
             relations: ['questions', 'questions.options'],
@@ -59,13 +59,16 @@ let QuizzesService = class QuizzesService {
             if (!question) {
                 throw new common_1.NotFoundException(`Question with ID ${answer.questionId} not found in quiz`);
             }
-            const correctOption = question.options.find((opt) => opt.isCorrect);
-            if (correctOption?.id === answer.selectedOptionId) {
+            const selectedOption = question.options.find((opt) => opt.id === answer.selectedOptionId);
+            if (!selectedOption) {
+                throw new common_1.NotFoundException(`Selected option ID ${answer.selectedOptionId} not found for question ${answer.questionId}`);
+            }
+            if (selectedOption.isCorrect) {
                 score++;
             }
         }
         const result = this.resultRepo.create({
-            user: { id: 1 },
+            user: { id: userId },
             quiz: { id: dto.quizId },
             score,
         });

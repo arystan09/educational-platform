@@ -3,5 +3,5 @@ import { User } from './entities/user.entity';
 export declare class UsersService {
     private readonly userRepository;
     constructor(userRepository: Repository<User>);
-    findById(id: number): Promise<User | null>;
+    findById(id: string): Promise<User | null>;
 }

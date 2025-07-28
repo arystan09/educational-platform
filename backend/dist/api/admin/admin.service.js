@@ -29,15 +29,15 @@ let AdminService = class AdminService {
         return this.userRepo.find({ relations: ['enrollments'] });
     }
     async updateUserRole(id, dto) {
-        const user = await this.userRepo.findOne({ where: { id: Number(id) } });
+        const user = await this.userRepo.findOne({ where: { id } });
         if (!user)
             throw new common_1.NotFoundException('User not found');
         user.role = dto.role;
         return this.userRepo.save(user);
     }
     async grantCourseAccess(dto) {
-        const user = await this.userRepo.findOne({ where: { id: Number(dto.userId) }, relations: ['enrollments'] });
-        const course = await this.courseRepo.findOne({ where: { id: Number(dto.courseId) } });
+        const user = await this.userRepo.findOne({ where: { id: dto.userId }, relations: ['enrollments'] });
+        const course = await this.courseRepo.findOne({ where: { id: dto.courseId } });
         if (!user || !course)
             throw new common_1.NotFoundException('User or Course not found');
         user.enrollments.push({ user, course, startedAt: new Date() });

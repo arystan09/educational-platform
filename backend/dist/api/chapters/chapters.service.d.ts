@@ -6,10 +6,10 @@ export declare class ChaptersService {
     private chapterRepo;
     private courseRepo;
     constructor(chapterRepo: Repository<Chapter>, courseRepo: Repository<Course>);
-    findByCourse(courseId: number): Promise<Chapter[]>;
+    findByCourse(courseId: string): Promise<Chapter[]>;
     create(dto: CreateChapterDto): Promise<Chapter>;
-    update(id: number, dto: CreateChapterDto): Promise<Chapter>;
-    delete(id: number): Promise<{
+    update(id: string, dto: CreateChapterDto): Promise<Chapter>;
+    delete(id: string): Promise<{
         message: string;
     }>;
 }

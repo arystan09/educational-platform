@@ -12,12 +12,12 @@ const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
 let CertificateService = class CertificateService {
+    certsDir = path.resolve(__dirname, '..', '..', 'certificates');
     async generate(user, course) {
-        const certsDir = path.resolve(__dirname, '..', '..', 'certificates');
-        if (!fs.existsSync(certsDir))
-            fs.mkdirSync(certsDir);
+        if (!fs.existsSync(this.certsDir))
+            fs.mkdirSync(this.certsDir);
         const fileName = `${user.id}_${course.id}_${Date.now()}.pdf`;
-        const filePath = path.join(certsDir, fileName);
+        const filePath = path.join(this.certsDir, fileName);
         const doc = new PDFDocument();
         doc.pipe(fs.createWriteStream(filePath));
         doc.fontSize(20).text('Certificate of Completion', { align: 'center' });
@@ -30,6 +30,19 @@ let CertificateService = class CertificateService {
         doc.fontSize(12).text(`Date: ${new Date().toLocaleDateString()}`, { align: 'center' });
         doc.end();
         return `/certificates/${fileName}`;
+    }
+    findAll() {
+        if (!fs.existsSync(this.certsDir))
+            return [];
+        return fs.readdirSync(this.certsDir).filter(f => f.endsWith('.pdf'));
+    }
+    remove(fileName) {
+        const filePath = path.join(this.certsDir, fileName);
+        if (!fs.existsSync(filePath)) {
+            throw new common_1.NotFoundException('Certificate not found');
+        }
+        fs.unlinkSync(filePath);
+        return 'Certificate deleted';
     }
 };
 exports.CertificateService = CertificateService;

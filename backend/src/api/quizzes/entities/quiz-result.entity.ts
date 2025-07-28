@@ -5,7 +5,7 @@ import { Quiz } from './quiz.entity';
 @Entity()
 export class QuizResult {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @ManyToOne(() => User)
   user: User;

@@ -8,7 +8,7 @@ declare class QuizQuestionDto {
 }
 export declare class CreateQuizDto {
     title: string;
-    courseId: number;
+    courseId: string;
     questions: QuizQuestionDto[];
 }
 export {};

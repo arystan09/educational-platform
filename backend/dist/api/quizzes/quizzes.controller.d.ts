@@ -5,6 +5,6 @@ export declare class QuizzesController {
     private readonly quizzesService;
     constructor(quizzesService: QuizzesService);
     create(createQuizDto: CreateQuizDto): Promise<import("./entities/quiz.entity").Quiz>;
-    submit(submitQuizDto: SubmitQuizDto): Promise<import("./entities/quiz-result.entity").QuizResult>;
-    findOne(id: number): Promise<import("./entities/quiz.entity").Quiz | null>;
+    submit(submitQuizDto: SubmitQuizDto, req: any): Promise<import("./entities/quiz-result.entity").QuizResult>;
+    findOne(id: string): Promise<import("./entities/quiz.entity").Quiz | null>;
 }

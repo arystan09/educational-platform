@@ -45,7 +45,7 @@ __decorate([
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, mark_complete_dto_1.MarkCompleteDto]),
+    __metadata("design:paramtypes", [String, mark_complete_dto_1.MarkCompleteDto]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "markComplete", null);
 __decorate([
@@ -54,7 +54,7 @@ __decorate([
     __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Param)('chapterId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Number]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "markChapterCompleted", null);
 __decorate([
@@ -62,7 +62,7 @@ __decorate([
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getCompleted", null);
 __decorate([
@@ -70,7 +70,7 @@ __decorate([
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getPercent", null);
 __decorate([
@@ -78,7 +78,7 @@ __decorate([
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getCertificate", null);
 exports.ProgressController = ProgressController = __decorate([
