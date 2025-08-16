@@ -44,7 +44,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Enrollment.prototype, "completed", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: enrollment_status_enum_1.EnrollmentStatus, default: enrollment_status_enum_1.EnrollmentStatus.PENDING }),
+    (0, typeorm_1.Column)({ type: 'varchar', default: 'PENDING' }),
     __metadata("design:type", String)
 ], Enrollment.prototype, "status", void 0);
 exports.Enrollment = Enrollment = __decorate([

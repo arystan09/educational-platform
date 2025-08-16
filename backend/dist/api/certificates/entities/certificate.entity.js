@@ -17,21 +17,26 @@ let Certificate = class Certificate {
     id;
     user;
     course;
+    certificateUrl;
     issuedAt;
 };
 exports.Certificate = Certificate;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", String)
 ], Certificate.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.certificates, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.certificates),
     __metadata("design:type", user_entity_1.User)
 ], Certificate.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, (course) => course.certificates, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, course => course.certificates),
     __metadata("design:type", course_entity_1.Course)
 ], Certificate.prototype, "course", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Certificate.prototype, "certificateUrl", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

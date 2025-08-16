@@ -4,7 +4,10 @@ import { SubmitQuizDto } from './dto/submit-quiz.dto';
 export declare class QuizzesController {
     private readonly quizzesService;
     constructor(quizzesService: QuizzesService);
-    create(createQuizDto: CreateQuizDto): Promise<import("./entities/quiz.entity").Quiz>;
-    submit(submitQuizDto: SubmitQuizDto, req: any): Promise<import("./entities/quiz-result.entity").QuizResult>;
+    create(courseId: string, createQuizDto: CreateQuizDto): Promise<import("./entities/quiz.entity").Quiz>;
+    submit(submitQuizDto: SubmitQuizDto, req: any): Promise<any>;
+    getByCourse(courseId: string): Promise<import("./entities/quiz.entity").Quiz[]>;
     findOne(id: string): Promise<import("./entities/quiz.entity").Quiz | null>;
+    update(id: string, updateQuizDto: CreateQuizDto): Promise<import("./entities/quiz.entity").Quiz>;
+    remove(id: string): Promise<void>;
 }

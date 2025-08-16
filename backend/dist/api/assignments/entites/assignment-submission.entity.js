@@ -37,11 +37,11 @@ __decorate([
     __metadata("design:type", String)
 ], AssignmentSubmission.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => assignment_entity_1.Assignment, assignment => assignment.id, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToOne)(() => assignment_entity_1.Assignment, assignment => assignment.submissions, { onDelete: 'CASCADE' }),
     __metadata("design:type", assignment_entity_1.Assignment)
 ], AssignmentSubmission.prototype, "assignment", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.id, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, user => user.assignmentSubmissions, { onDelete: 'CASCADE' }),
     __metadata("design:type", user_entity_1.User)
 ], AssignmentSubmission.prototype, "student", void 0);
 __decorate([
@@ -61,7 +61,7 @@ __decorate([
     __metadata("design:type", String)
 ], AssignmentSubmission.prototype, "feedback", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: SubmissionStatus, default: SubmissionStatus.PENDING }),
+    (0, typeorm_1.Column)({ type: 'varchar', default: 'PENDING' }),
     __metadata("design:type", String)
 ], AssignmentSubmission.prototype, "status", void 0);
 __decorate([

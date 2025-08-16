@@ -35,6 +35,15 @@ let AdminController = class AdminController {
     grantCourseAccess(dto) {
         return this.adminService.grantCourseAccess(dto);
     }
+    revokeCourseAccess(userId, courseId) {
+        return this.adminService.revokeCourseAccess(userId, courseId);
+    }
+    getUserEnrollments(userId) {
+        return this.adminService.getUserEnrollments(userId);
+    }
+    getAllEnrollments() {
+        return this.adminService.getAllEnrollments();
+    }
 };
 exports.AdminController = AdminController;
 __decorate([
@@ -58,6 +67,27 @@ __decorate([
     __metadata("design:paramtypes", [grant_course_access_dto_1.GrantCourseAccessDto]),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "grantCourseAccess", null);
+__decorate([
+    (0, common_1.Delete)('users/:userId/courses/:courseId/access'),
+    __param(0, (0, common_1.Param)('userId')),
+    __param(1, (0, common_1.Param)('courseId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "revokeCourseAccess", null);
+__decorate([
+    (0, common_1.Get)('users/:userId/enrollments'),
+    __param(0, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "getUserEnrollments", null);
+__decorate([
+    (0, common_1.Get)('enrollments'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "getAllEnrollments", null);
 exports.AdminController = AdminController = __decorate([
     (0, common_1.Controller)('admin'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),

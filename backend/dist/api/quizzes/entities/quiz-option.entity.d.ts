@@ -4,4 +4,6 @@ export declare class QuizOption {
     text: string;
     isCorrect: boolean;
     question: QuizQuestion;
+    createdAt: Date;
+    updatedAt: Date;
 }

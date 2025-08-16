@@ -16,7 +16,9 @@ const quiz_entity_1 = require("./quiz.entity");
 let QuizResult = class QuizResult {
     id;
     user;
+    userId;
     quiz;
+    quizId;
     score;
     createdAt;
     completedAt;
@@ -24,16 +26,24 @@ let QuizResult = class QuizResult {
 exports.QuizResult = QuizResult;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], QuizResult.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, { onDelete: 'CASCADE' }),
     __metadata("design:type", user_entity_1.User)
 ], QuizResult.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], QuizResult.prototype, "userId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz, { onDelete: 'CASCADE' }),
     __metadata("design:type", quiz_entity_1.Quiz)
 ], QuizResult.prototype, "quiz", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], QuizResult.prototype, "quizId", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)

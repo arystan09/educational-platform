@@ -12,7 +12,7 @@ import { Progress } from '../../progress/entities/progress.entity';
 import { Review } from '../../reviews/review.entity';
 import { Role } from '../enums/role.enum';
 import { AssignmentSubmission } from '../../assignments/entites/assignment-submission.entity';
-import { Notification } from '../../notifications/entities/notification.entity';
+
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 
@@ -30,8 +30,17 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: Role, default: Role.STUDENT })
+  @Column({ type: 'varchar', default: 'STUDENT' })
   role: Role;
+
+  @Column({ default: false })
+  emailVerified: boolean;
+
+  @Column({ nullable: true })
+  emailVerificationToken: string;
+
+  @Column({ nullable: true })
+  emailVerificationExpires: Date;
 
   @OneToMany(() => Course, (course) => course.createdBy)
   courses: Course[];
@@ -45,8 +54,7 @@ export class User {
   @OneToMany(() => AssignmentSubmission, sub => sub.student)
   assignmentSubmissions: AssignmentSubmission[];
   
-  @OneToMany(() => Notification, (n) => n.user)
-  notifications: Notification[];
+
 
   @OneToMany(() => Enrollment, (enrollment) => enrollment.user)
   enrollments: Enrollment[];

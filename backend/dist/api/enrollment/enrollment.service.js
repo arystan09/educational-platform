@@ -45,6 +45,47 @@ let EnrollmentService = class EnrollmentService {
         enrollment.status = enrollment_status_enum_1.EnrollmentStatus.REJECTED;
         return this.enrollmentRepository.save(enrollment);
     }
+    async enroll(userId, courseId) {
+        console.log('🔍 Enrolling user', userId, 'in course', courseId);
+        try {
+            const existingEnrollment = await this.enrollmentRepository.findOne({
+                where: { user: { id: userId }, course: { id: courseId } },
+            });
+            if (existingEnrollment) {
+                console.log('⚠️ User already enrolled in this course');
+                return existingEnrollment;
+            }
+            const enrollment = this.enrollmentRepository.create({
+                user: { id: userId },
+                course: { id: courseId },
+                status: enrollment_status_enum_1.EnrollmentStatus.PENDING,
+            });
+            console.log('💾 Saving enrollment:', enrollment);
+            const savedEnrollment = await this.enrollmentRepository.save(enrollment);
+            console.log('✅ Enrollment saved successfully:', savedEnrollment);
+            return savedEnrollment;
+        }
+        catch (error) {
+            console.error('❌ Enrollment error:', error);
+            throw error;
+        }
+    }
+    async getUserEnrollments(userId) {
+        return this.enrollmentRepository.find({
+            where: { user: { id: userId } },
+            relations: ['course'],
+        });
+    }
+    async checkUserAccess(userId, courseId) {
+        const enrollment = await this.enrollmentRepository.findOne({
+            where: {
+                user: { id: userId },
+                course: { id: courseId },
+                status: enrollment_status_enum_1.EnrollmentStatus.APPROVED
+            },
+        });
+        return !!enrollment;
+    }
 };
 exports.EnrollmentService = EnrollmentService;
 exports.EnrollmentService = EnrollmentService = __decorate([

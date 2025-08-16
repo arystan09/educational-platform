@@ -40,7 +40,7 @@ __decorate([
     __metadata("design:type", course_entity_1.Course)
 ], Application.prototype, "course", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: ApplicationStatus, default: ApplicationStatus.PENDING }),
+    (0, typeorm_1.Column)({ type: 'varchar', default: 'PENDING' }),
     __metadata("design:type", String)
 ], Application.prototype, "status", void 0);
 __decorate([

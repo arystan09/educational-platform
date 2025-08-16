@@ -7,6 +7,7 @@ export declare class CoursesService {
     private readonly courseRepository;
     constructor(courseRepository: Repository<Course>);
     findAll(): Promise<Course[]>;
+    findPublished(): Promise<Course[]>;
     findOne(id: string): Promise<Course>;
     create(dto: CreateCourseDto, creator: User): Promise<Course>;
     update(id: string, dto: UpdateCourseDto, user: User): Promise<Course>;

@@ -12,6 +12,9 @@ export declare class QuizzesService {
     private readonly optionRepo;
     constructor(quizRepo: Repository<Quiz>, resultRepo: Repository<QuizResult>, questionRepo: Repository<QuizQuestion>, optionRepo: Repository<QuizOption>);
     create(dto: CreateQuizDto): Promise<Quiz>;
-    submitQuiz(dto: SubmitQuizDto, userId: string): Promise<QuizResult>;
+    submitQuiz(dto: SubmitQuizDto, userId: string): Promise<any>;
     findOne(id: string): Promise<Quiz | null>;
+    getQuizzesForCourse(courseId: string): Promise<Quiz[]>;
+    update(id: string, updateQuizDto: CreateQuizDto): Promise<Quiz>;
+    remove(id: string): Promise<void>;
 }

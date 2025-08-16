@@ -4,5 +4,6 @@ export declare class Certificate {
     id: string;
     user: User;
     course: Course;
+    certificateUrl: string;
     issuedAt: Date;
 }

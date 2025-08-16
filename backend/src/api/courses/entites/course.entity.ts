@@ -15,6 +15,7 @@ import { Quiz } from '../../quizzes/entities/quiz.entity';
 import { Assignment } from '../../assignments/entites/assignment.entity';
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
+import { MediaFile } from '../../media/entities/media-file.entity';
 
 @Entity()
 export class Course {
@@ -26,6 +27,15 @@ export class Course {
 
   @Column({ type: 'text' })
   description: string;
+
+  @Column()
+  duration: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  price: number;
+
+  @Column()
+  category: string;
 
   @Column({ nullable: true })
   thumbnailUrl?: string;
@@ -51,11 +61,14 @@ export class Course {
   @OneToMany(() => Enrollment, (enrollment) => enrollment.course)
   enrollments: Enrollment[];
 
-  @OneToMany(() => Certificate, (cert) => cert.user)
+  @OneToMany(() => Certificate, (cert) => cert.course)
   certificates: Certificate[];
 
   @OneToMany(() => Quiz, (quiz) => quiz.course)
   quizzes: Quiz[];
+
+  @OneToMany(() => MediaFile, (mediaFile) => mediaFile.course)
+  mediaFiles: MediaFile[];
 
   @CreateDateColumn()
   createdAt: Date;

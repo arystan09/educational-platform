@@ -4,6 +4,7 @@ import { AdminController } from './admin.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 import { Course } from '../courses/entites/course.entity';
+import { Enrollment } from '../enrollment/entities/enrollment.entity';
 import { AdminCoursesController } from './admin-courses.controller';
 import { CoursesModule } from '../courses/courses.module';
 import { AdminRequestsController } from './admin-requests.controller';
@@ -16,7 +17,7 @@ import { AnalyticsModule } from '../analytics/analytics.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Course]),
+    TypeOrmModule.forFeature([User, Course, Enrollment]),
     CoursesModule,
     EnrollmentModule,
     ReviewsModule,

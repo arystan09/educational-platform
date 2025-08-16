@@ -3,10 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Course } from '../courses/entites/course.entity';
+import { MediaFile } from '../media/entities/media-file.entity';
 
 @Entity()
 export class Chapter {
@@ -27,6 +29,9 @@ export class Chapter {
 
   @ManyToOne(() => Course, (course) => course.id, { onDelete: 'CASCADE' })
   course: Course;
+
+  @OneToMany(() => MediaFile, (mediaFile) => mediaFile.chapter)
+  mediaFiles: MediaFile[];
 
   @CreateDateColumn()
   createdAt: Date;

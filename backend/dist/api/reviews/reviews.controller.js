@@ -39,7 +39,7 @@ let ReviewsController = class ReviewsController {
 exports.ReviewsController = ReviewsController;
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
-    (0, common_1.Post)(':courseId'),
+    (0, common_1.Post)(),
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Body)()),
@@ -48,14 +48,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReviewsController.prototype, "createOrUpdate", null);
 __decorate([
-    (0, common_1.Get)('course/:courseId'),
+    (0, common_1.Get)(),
     __param(0, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ReviewsController.prototype, "getByCourse", null);
 __decorate([
-    (0, common_1.Get)('average/:courseId'),
+    (0, common_1.Get)('average'),
     __param(0, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -63,7 +63,7 @@ __decorate([
 ], ReviewsController.prototype, "getAverage", null);
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
-    (0, common_1.Delete)(':courseId'),
+    (0, common_1.Delete)(),
     __param(0, (0, user_id_decorator_1.UserId)()),
     __param(1, (0, common_1.Param)('courseId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -71,7 +71,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReviewsController.prototype, "delete", null);
 exports.ReviewsController = ReviewsController = __decorate([
-    (0, common_1.Controller)('reviews'),
+    (0, common_1.Controller)('courses/:courseId/reviews'),
     __metadata("design:paramtypes", [reviews_service_1.ReviewsService])
 ], ReviewsController);
 //# sourceMappingURL=reviews.controller.js.map

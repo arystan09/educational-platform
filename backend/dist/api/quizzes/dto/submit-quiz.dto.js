@@ -17,7 +17,7 @@ class SubmitQuizDto {
 }
 exports.SubmitQuizDto = SubmitQuizDto;
 __decorate([
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SubmitQuizDto.prototype, "quizId", void 0);
 __decorate([

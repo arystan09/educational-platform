@@ -21,10 +21,10 @@ export class AssignmentSubmission {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Assignment, assignment => assignment.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Assignment, assignment => assignment.submissions, { onDelete: 'CASCADE' })
   assignment: Assignment;
 
-  @ManyToOne(() => User, user => user.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.assignmentSubmissions, { onDelete: 'CASCADE' })
   student: User;
 
   @Column({ nullable: true })
@@ -39,7 +39,7 @@ export class AssignmentSubmission {
   @Column({ type: 'text', nullable: true })
   feedback?: string;
 
-  @Column({ type: 'enum', enum: SubmissionStatus, default: SubmissionStatus.PENDING })
+  @Column({ type: 'varchar', default: 'PENDING' })
   status: SubmissionStatus;
 
   @CreateDateColumn()

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Quiz } from './quiz.entity';
 import { QuizOption } from './quiz-option.entity';
 
@@ -10,9 +10,18 @@ export class QuizQuestion {
   @Column()
   question: string;
 
-  @ManyToOne(() => Quiz, quiz => quiz.questions)
+  @Column({ type: 'varchar' })
+  type: 'MULTIPLE_CHOICE' | 'TRUE_FALSE';
+
+  @ManyToOne(() => Quiz, quiz => quiz.questions, { onDelete: 'CASCADE' })
   quiz: Quiz;
 
-  @OneToMany(() => QuizOption, option => option.question, { cascade: true })
+  @OneToMany(() => QuizOption, option => option.question, { cascade: true, onDelete: 'CASCADE' })
   options: QuizOption[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

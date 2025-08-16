@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Chapter = void 0;
 const typeorm_1 = require("typeorm");
 const course_entity_1 = require("../courses/entites/course.entity");
+const media_file_entity_1 = require("../media/entities/media-file.entity");
 let Chapter = class Chapter {
     id;
     title;
@@ -19,6 +20,7 @@ let Chapter = class Chapter {
     videoUrl;
     order;
     course;
+    mediaFiles;
     createdAt;
     updatedAt;
 };
@@ -47,6 +49,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, (course) => course.id, { onDelete: 'CASCADE' }),
     __metadata("design:type", course_entity_1.Course)
 ], Chapter.prototype, "course", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => media_file_entity_1.MediaFile, (mediaFile) => mediaFile.chapter),
+    __metadata("design:type", Array)
+], Chapter.prototype, "mediaFiles", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

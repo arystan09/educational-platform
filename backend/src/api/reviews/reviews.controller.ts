@@ -15,12 +15,12 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserId } from '../auth/decorators/user-id.decorator';
 
-@Controller('reviews')
+@Controller('courses/:courseId/reviews')
 export class ReviewsController {
   constructor(private readonly service: ReviewsService) {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Post(':courseId')
+  @Post()
   createOrUpdate(
     @UserId() userId: string,
     @Param('courseId', ParseIntPipe) courseId: string,
@@ -29,18 +29,18 @@ export class ReviewsController {
     return this.service.createOrUpdate(userId, courseId, dto);
   }
 
-  @Get('course/:courseId')
+  @Get()
   getByCourse(@Param('courseId', ParseIntPipe) courseId: string) {
     return this.service.findByCourse(courseId);
   }
 
-  @Get('average/:courseId')
+  @Get('average')
   getAverage(@Param('courseId', ParseIntPipe) courseId: string) {
     return this.service.getAverageRating(courseId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete(':courseId')
+  @Delete()
   delete(
     @UserId() userId: string,
     @Param('courseId', ParseIntPipe) courseId: string,

@@ -25,7 +25,7 @@ export class Application {
   @ManyToOne(() => Course, { eager: true })
   course: Course;
 
-  @Column({ type: 'enum', enum: ApplicationStatus, default: ApplicationStatus.PENDING })
+  @Column({ type: 'varchar', default: 'PENDING' })
   status: ApplicationStatus;
 
   @CreateDateColumn()

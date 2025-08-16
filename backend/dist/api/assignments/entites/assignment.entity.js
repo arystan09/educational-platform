@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Assignment = void 0;
 const typeorm_1 = require("typeorm");
 const course_entity_1 = require("../../courses/entites/course.entity");
+const assignment_submission_entity_1 = require("./assignment-submission.entity");
 let Assignment = class Assignment {
     id;
     title;
     description;
     course;
+    submissions;
     dueDate;
     createdAt;
     updatedAt;
@@ -38,6 +40,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, course => course.assignments, { onDelete: 'CASCADE' }),
     __metadata("design:type", course_entity_1.Course)
 ], Assignment.prototype, "course", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => assignment_submission_entity_1.AssignmentSubmission, submission => submission.assignment),
+    __metadata("design:type", Array)
+], Assignment.prototype, "submissions", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)

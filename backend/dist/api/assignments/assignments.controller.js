@@ -19,8 +19,7 @@ const create_assignment_dto_1 = require("./dto/create-assignment.dto");
 const submit_assignment_dto_1 = require("./dto/submit-assignment.dto");
 const grade_assignment_dto_1 = require("./dto/grade-assignment.dto");
 const update_status_dto_1 = require("./dto/update-status.dto");
-const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
-const roles_guard_1 = require("../auth/guards/roles.guard");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const role_enum_1 = require("../users/enums/role.enum");
 let AssignmentsController = class AssignmentsController {
@@ -31,8 +30,9 @@ let AssignmentsController = class AssignmentsController {
     create(dto) {
         return this.assignmentsService.createAssignment(dto);
     }
-    submit(dto, req) {
-        return this.assignmentsService.submitAssignment(dto, req.user);
+    async submit(dto, req) {
+        const user = await this.assignmentsService.getUserById(req.user.sub);
+        return this.assignmentsService.submitAssignment(dto, user);
     }
     grade(dto) {
         return this.assignmentsService.gradeSubmission(dto);
@@ -66,7 +66,7 @@ __decorate([
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [submit_assignment_dto_1.SubmitAssignmentDto, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AssignmentsController.prototype, "submit", null);
 __decorate([
     (0, common_1.Post)('grade'),
@@ -85,8 +85,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AssignmentsController.prototype, "updateStatus", null);
 __decorate([
-    (0, common_1.Get)('course/:courseId'),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.TEACHER, role_enum_1.Role.ADMIN, role_enum_1.Role.STUDENT),
+    (0, common_1.Get)(),
     __param(0, (0, common_1.Param)('courseId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -109,8 +108,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AssignmentsController.prototype, "getMy", null);
 exports.AssignmentsController = AssignmentsController = __decorate([
-    (0, common_1.Controller)('assignments'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, common_1.Controller)('courses/:courseId/assignments'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [assignments_service_1.AssignmentsService])
 ], AssignmentsController);
 //# sourceMappingURL=assignments.controller.js.map

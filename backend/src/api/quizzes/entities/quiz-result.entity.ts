@@ -5,13 +5,19 @@ import { Quiz } from './quiz.entity';
 @Entity()
 export class QuizResult {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User;
 
-  @ManyToOne(() => Quiz)
+  @Column()
+  userId: string;
+
+  @ManyToOne(() => Quiz, { onDelete: 'CASCADE' })
   quiz: Quiz;
+
+  @Column()
+  quizId: string;
 
   @Column()
   score: number;

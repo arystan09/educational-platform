@@ -4,7 +4,6 @@ import { Progress } from '../../progress/entities/progress.entity';
 import { Review } from '../../reviews/review.entity';
 import { Role } from '../enums/role.enum';
 import { AssignmentSubmission } from '../../assignments/entites/assignment-submission.entity';
-import { Notification } from '../../notifications/entities/notification.entity';
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 export declare class User {
@@ -13,11 +12,13 @@ export declare class User {
     email: string;
     password: string;
     role: Role;
+    emailVerified: boolean;
+    emailVerificationToken: string;
+    emailVerificationExpires: Date;
     courses: Course[];
     courseProgress: CourseProgress[];
     progress: Progress[];
     assignmentSubmissions: AssignmentSubmission[];
-    notifications: Notification[];
     enrollments: Enrollment[];
     certificates: Certificate[];
     reviews: Review[];

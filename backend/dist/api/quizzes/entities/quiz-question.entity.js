@@ -16,8 +16,11 @@ const quiz_option_entity_1 = require("./quiz-option.entity");
 let QuizQuestion = class QuizQuestion {
     id;
     question;
+    type;
     quiz;
     options;
+    createdAt;
+    updatedAt;
 };
 exports.QuizQuestion = QuizQuestion;
 __decorate([
@@ -29,13 +32,25 @@ __decorate([
     __metadata("design:type", String)
 ], QuizQuestion.prototype, "question", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz, quiz => quiz.questions),
+    (0, typeorm_1.Column)({ type: 'varchar' }),
+    __metadata("design:type", String)
+], QuizQuestion.prototype, "type", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz, quiz => quiz.questions, { onDelete: 'CASCADE' }),
     __metadata("design:type", quiz_entity_1.Quiz)
 ], QuizQuestion.prototype, "quiz", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => quiz_option_entity_1.QuizOption, option => option.question, { cascade: true }),
+    (0, typeorm_1.OneToMany)(() => quiz_option_entity_1.QuizOption, option => option.question, { cascade: true, onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
 ], QuizQuestion.prototype, "options", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], QuizQuestion.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], QuizQuestion.prototype, "updatedAt", void 0);
 exports.QuizQuestion = QuizQuestion = __decorate([
     (0, typeorm_1.Entity)()
 ], QuizQuestion);

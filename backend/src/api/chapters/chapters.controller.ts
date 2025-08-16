@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ChaptersService } from './chapters.service';
 import { CreateChapterDto } from './dto/create-chapter.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,7 +21,7 @@ import { Application, ApplicationStatus } from '../applications/entities/applica
 import { UserId } from '../auth/decorators/user-id.decorator';
 import { User } from '../users/entities/user.entity';
 
-@Controller('chapters')
+@Controller('courses/:courseId/chapters')
 export class ChaptersController {
   constructor(
     private readonly chaptersService: ChaptersService,
@@ -29,46 +29,71 @@ export class ChaptersController {
     private readonly applicationRepo: Repository<Application>,
   ) {}
 
-  // Защищенный метод с проверкой заявки
-  @Get('course/:courseId')
-  @UseGuards(AuthGuard('jwt'))
-  async findByCourse(
-    @Param('courseId', ParseIntPipe) courseId: string,
-    @UserId() user: User,
-  ) {
-    const application = await this.applicationRepo.findOne({
-      where: { 
-        user: { id: user.id }, 
-        course: { id: courseId }, 
-        status: ApplicationStatus.APPROVED,
-      },
-    });
-
-    if (!application) {
-      throw new ForbiddenException('Нет доступа к курсу');
-    }
-
+  // Get chapters for a course (all authenticated users can view)
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async findByCourse(@Param('courseId', ParseIntPipe) courseId: string) {
     return this.chaptersService.findByCourse(courseId);
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @Post()
-  create(@Body() dto: CreateChapterDto) {
-    return this.chaptersService.create(dto);
+  create(
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Body() dto: CreateChapterDto
+  ) {
+    return this.chaptersService.create({ ...dto, courseId });
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: string, @Body() dto: CreateChapterDto) {
+  update(
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Param('id', ParseIntPipe) id: string, 
+    @Body() dto: CreateChapterDto
+  ) {
     return this.chaptersService.update(id, dto);
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: string) {
+  delete(
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Param('id', ParseIntPipe) id: string
+  ) {
     return this.chaptersService.delete(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/complete')
+  async markComplete(
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Param('id', ParseIntPipe) id: string,
+    @UserId() userId: string
+  ) {
+    return this.chaptersService.markComplete(id, userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/uncomplete')
+  async unmarkComplete(
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Param('id', ParseIntPipe) id: string,
+    @UserId() userId: string
+  ) {
+    return this.chaptersService.unmarkComplete(id, userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/progress')
+  async getProgress(
+    @Param('courseId', ParseIntPipe) courseId: string,
+    @Param('id', ParseIntPipe) id: string,
+    @UserId() userId: string
+  ) {
+    return this.chaptersService.getChapterProgress(id, userId);
   }
 }

@@ -22,7 +22,18 @@ export class AssignmentsService {
 
     @InjectRepository(Course)
     private courseRepo: Repository<Course>,
+
+    @InjectRepository(User)
+    private userRepo: Repository<User>,
   ) {}
+
+  async getUserById(userId: string): Promise<User> {
+    const user = await this.userRepo.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+  }
 
   async createAssignment(dto: CreateAssignmentDto): Promise<Assignment> {
     const course = await this.courseRepo.findOne({
@@ -43,11 +54,18 @@ export class AssignmentsService {
   }
 
   async submitAssignment(dto: SubmitAssignmentDto, student: User): Promise<AssignmentSubmission> {
+    console.log('🔍 submitAssignment called with:', { dto, student: student.id });
+    
     const assignment = await this.assignmentRepo.findOne({
       where: { id: dto.assignmentId },
     });
 
-    if (!assignment) throw new NotFoundException('Задание не найдено');
+    if (!assignment) {
+      console.log('❌ Assignment not found:', dto.assignmentId);
+      throw new NotFoundException('Задание не найдено');
+    }
+
+    console.log('✅ Found assignment:', assignment.id);
 
     const submission = this.submissionRepo.create({
       assignment,
@@ -56,6 +74,7 @@ export class AssignmentsService {
       ...(dto.fileUrl ? { fileUrl: dto.fileUrl } : {}),
     });
 
+    console.log('📝 Created submission:', submission);
     return this.submissionRepo.save(submission);
   }
 
@@ -83,10 +102,18 @@ export class AssignmentsService {
   }
 
   async getAssignmentsForCourse(courseId: string): Promise<Assignment[]> {
-    return this.assignmentRepo.find({
-      where: { course: { id: courseId } },
-      relations: ['submissions'],
-    });
+    console.log('🔍 Getting assignments for course:', courseId);
+    try {
+      const assignments = await this.assignmentRepo.find({
+        where: { course: { id: courseId } },
+        relations: ['submissions'],
+      });
+      console.log('✅ Found assignments:', assignments);
+      return assignments;
+    } catch (error) {
+      console.error('❌ Error getting assignments:', error);
+      throw error;
+    }
   }
 
   async getSubmissionsForAssignment(assignmentId: string): Promise<AssignmentSubmission[]> {

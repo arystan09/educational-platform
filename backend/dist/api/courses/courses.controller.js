@@ -16,7 +16,7 @@ exports.CoursesController = void 0;
 const common_1 = require("@nestjs/common");
 const courses_service_1 = require("./courses.service");
 const create_course_dto_1 = require("./dto/create-course.dto");
-const passport_1 = require("@nestjs/passport");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const roles_guard_1 = require("../auth/guards/roles.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const current_user_decorator_1 = require("../auth/decorators/current-user.decorator");
@@ -27,7 +27,7 @@ let CoursesController = class CoursesController {
         this.coursesService = coursesService;
     }
     findAll() {
-        return this.coursesService.findAll();
+        return this.coursesService.findPublished();
     }
     findOne(id) {
         return this.coursesService.findOne(id);
@@ -37,6 +37,9 @@ let CoursesController = class CoursesController {
     }
     update(id, dto, user) {
         return this.coursesService.update(id, dto, user);
+    }
+    publish(id, user) {
+        return this.coursesService.publish(id, user);
     }
 };
 exports.CoursesController = CoursesController;
@@ -54,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CoursesController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), roles_guard_1.RolesGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)('ADMIN'),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -64,7 +67,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CoursesController.prototype, "create", null);
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), roles_guard_1.RolesGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)('ADMIN'),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -75,6 +78,16 @@ __decorate([
         user_entity_1.User]),
     __metadata("design:returntype", void 0)
 ], CoursesController.prototype, "update", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, common_1.Patch)(':id/publish'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, current_user_decorator_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, user_entity_1.User]),
+    __metadata("design:returntype", void 0)
+], CoursesController.prototype, "publish", null);
 exports.CoursesController = CoursesController = __decorate([
     (0, common_1.Controller)('courses'),
     __metadata("design:paramtypes", [courses_service_1.CoursesService])

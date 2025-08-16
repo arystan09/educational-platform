@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -22,7 +22,7 @@ export class CoursesController {
 
   @Get()
   findAll() {
-    return this.coursesService.findAll();
+    return this.coursesService.findPublished();
   }
 
   @Get(':id')
@@ -30,14 +30,14 @@ export class CoursesController {
     return this.coursesService.findOne(id);
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @Post()
   create(@Body() dto: CreateCourseDto, @CurrentUser() user: User) {
     return this.coursesService.create(dto, user);
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @Patch(':id')
   update(
@@ -46,5 +46,12 @@ export class CoursesController {
     @CurrentUser() user: User,
   ) {
     return this.coursesService.update(id, dto, user);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  @Patch(':id/publish')
+  publish(@Param('id', ParseIntPipe) id: string, @CurrentUser() user: User) {
+    return this.coursesService.publish(id, user);
   }
 }

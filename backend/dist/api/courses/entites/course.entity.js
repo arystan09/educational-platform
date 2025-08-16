@@ -19,10 +19,14 @@ const quiz_entity_1 = require("../../quizzes/entities/quiz.entity");
 const assignment_entity_1 = require("../../assignments/entites/assignment.entity");
 const enrollment_entity_1 = require("../../enrollment/entities/enrollment.entity");
 const certificate_entity_1 = require("../../certificates/entities/certificate.entity");
+const media_file_entity_1 = require("../../media/entities/media-file.entity");
 let Course = class Course {
     id;
     title;
     description;
+    duration;
+    price;
+    category;
     thumbnailUrl;
     createdBy;
     isPublished;
@@ -33,6 +37,7 @@ let Course = class Course {
     enrollments;
     certificates;
     quizzes;
+    mediaFiles;
     createdAt;
     updatedAt;
 };
@@ -49,6 +54,18 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text' }),
     __metadata("design:type", String)
 ], Course.prototype, "description", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Course.prototype, "duration", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'decimal', precision: 10, scale: 2, default: 0 }),
+    __metadata("design:type", Number)
+], Course.prototype, "price", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Course.prototype, "category", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
@@ -82,13 +99,17 @@ __decorate([
     __metadata("design:type", Array)
 ], Course.prototype, "enrollments", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => certificate_entity_1.Certificate, (cert) => cert.user),
+    (0, typeorm_1.OneToMany)(() => certificate_entity_1.Certificate, (cert) => cert.course),
     __metadata("design:type", Array)
 ], Course.prototype, "certificates", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => quiz_entity_1.Quiz, (quiz) => quiz.course),
     __metadata("design:type", Array)
 ], Course.prototype, "quizzes", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => media_file_entity_1.MediaFile, (mediaFile) => mediaFile.course),
+    __metadata("design:type", Array)
+], Course.prototype, "mediaFiles", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

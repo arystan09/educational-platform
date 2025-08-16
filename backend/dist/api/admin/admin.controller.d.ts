@@ -6,5 +6,10 @@ export declare class AdminController {
     constructor(adminService: AdminService);
     getAllUsers(): Promise<import("../users/entities/user.entity").User[]>;
     updateUserRole(id: string, dto: UpdateUserRoleDto): Promise<import("../users/entities/user.entity").User>;
-    grantCourseAccess(dto: GrantCourseAccessDto): Promise<import("../users/entities/user.entity").User>;
+    grantCourseAccess(dto: GrantCourseAccessDto): Promise<import("../enrollment/entities/enrollment.entity").Enrollment>;
+    revokeCourseAccess(userId: string, courseId: string): Promise<{
+        message: string;
+    }>;
+    getUserEnrollments(userId: string): Promise<import("../enrollment/entities/enrollment.entity").Enrollment[]>;
+    getAllEnrollments(): Promise<import("../enrollment/entities/enrollment.entity").Enrollment[]>;
 }

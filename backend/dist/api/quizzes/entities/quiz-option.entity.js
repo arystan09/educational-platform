@@ -17,6 +17,8 @@ let QuizOption = class QuizOption {
     text;
     isCorrect;
     question;
+    createdAt;
+    updatedAt;
 };
 exports.QuizOption = QuizOption;
 __decorate([
@@ -32,9 +34,17 @@ __decorate([
     __metadata("design:type", Boolean)
 ], QuizOption.prototype, "isCorrect", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => quiz_question_entity_1.QuizQuestion, question => question.options),
+    (0, typeorm_1.ManyToOne)(() => quiz_question_entity_1.QuizQuestion, question => question.options, { onDelete: 'CASCADE' }),
     __metadata("design:type", quiz_question_entity_1.QuizQuestion)
 ], QuizOption.prototype, "question", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], QuizOption.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], QuizOption.prototype, "updatedAt", void 0);
 exports.QuizOption = QuizOption = __decorate([
     (0, typeorm_1.Entity)()
 ], QuizOption);

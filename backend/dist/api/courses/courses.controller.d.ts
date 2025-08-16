@@ -8,4 +8,5 @@ export declare class CoursesController {
     findOne(id: string): Promise<import("./entites/course.entity").Course>;
     create(dto: CreateCourseDto, user: User): Promise<import("./entites/course.entity").Course>;
     update(id: string, dto: CreateCourseDto, user: User): Promise<import("./entites/course.entity").Course>;
+    publish(id: string, user: User): Promise<import("./entites/course.entity").Course>;
 }

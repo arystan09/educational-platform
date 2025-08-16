@@ -6,10 +6,14 @@ import { Quiz } from '../../quizzes/entities/quiz.entity';
 import { Assignment } from '../../assignments/entites/assignment.entity';
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
+import { MediaFile } from '../../media/entities/media-file.entity';
 export declare class Course {
     id: string;
     title: string;
     description: string;
+    duration: number;
+    price: number;
+    category: string;
     thumbnailUrl?: string;
     createdBy: User;
     isPublished: boolean;
@@ -20,6 +24,7 @@ export declare class Course {
     enrollments: Enrollment[];
     certificates: Certificate[];
     quizzes: Quiz[];
+    mediaFiles: MediaFile[];
     createdAt: Date;
     updatedAt: Date;
 }

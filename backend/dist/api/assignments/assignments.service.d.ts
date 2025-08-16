@@ -11,7 +11,9 @@ export declare class AssignmentsService {
     private assignmentRepo;
     private submissionRepo;
     private courseRepo;
-    constructor(assignmentRepo: Repository<Assignment>, submissionRepo: Repository<AssignmentSubmission>, courseRepo: Repository<Course>);
+    private userRepo;
+    constructor(assignmentRepo: Repository<Assignment>, submissionRepo: Repository<AssignmentSubmission>, courseRepo: Repository<Course>, userRepo: Repository<User>);
+    getUserById(userId: string): Promise<User>;
     createAssignment(dto: CreateAssignmentDto): Promise<Assignment>;
     submitAssignment(dto: SubmitAssignmentDto, student: User): Promise<AssignmentSubmission>;
     gradeSubmission(dto: GradeAssignmentDto): Promise<AssignmentSubmission>;

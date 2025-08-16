@@ -13,6 +13,7 @@ const admin_controller_1 = require("./admin.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../users/entities/user.entity");
 const course_entity_1 = require("../courses/entites/course.entity");
+const enrollment_entity_1 = require("../enrollment/entities/enrollment.entity");
 const admin_courses_controller_1 = require("./admin-courses.controller");
 const courses_module_1 = require("../courses/courses.module");
 const admin_requests_controller_1 = require("./admin-requests.controller");
@@ -28,7 +29,7 @@ exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, course_entity_1.Course]),
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, course_entity_1.Course, enrollment_entity_1.Enrollment]),
             courses_module_1.CoursesModule,
             enrollment_module_1.EnrollmentModule,
             reviews_module_1.ReviewsModule,

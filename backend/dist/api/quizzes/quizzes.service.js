@@ -34,18 +34,34 @@ let QuizzesService = class QuizzesService {
     async create(dto) {
         const quiz = this.quizRepo.create({
             title: dto.title,
+            description: dto.description,
             course: { id: dto.courseId },
-            questions: dto.questions.map((q) => this.questionRepo.create({
-                question: q.question,
-                options: q.options.map((opt) => this.optionRepo.create({
-                    text: opt.text,
-                    isCorrect: opt.isCorrect,
-                })),
-            })),
         });
-        return await this.quizRepo.save(quiz);
+        const savedQuiz = await this.quizRepo.save(quiz);
+        for (const questionDto of dto.questions) {
+            const question = this.questionRepo.create({
+                question: questionDto.question,
+                type: questionDto.type,
+                quiz: savedQuiz,
+            });
+            const savedQuestion = await this.questionRepo.save(question);
+            for (const optionDto of questionDto.options) {
+                const option = this.optionRepo.create({
+                    text: optionDto.text,
+                    isCorrect: optionDto.isCorrect,
+                    question: savedQuestion,
+                });
+                await this.optionRepo.save(option);
+            }
+        }
+        const result = await this.findOne(savedQuiz.id);
+        if (!result) {
+            throw new common_1.NotFoundException('Failed to create quiz');
+        }
+        return result;
     }
     async submitQuiz(dto, userId) {
+        console.log('🔍 submitQuiz called with:', { dto, userId });
         const quiz = await this.quizRepo.findOne({
             where: { id: dto.quizId },
             relations: ['questions', 'questions.options'],
@@ -53,7 +69,9 @@ let QuizzesService = class QuizzesService {
         if (!quiz) {
             throw new common_1.NotFoundException(`Quiz with ID ${dto.quizId} not found`);
         }
+        console.log('✅ Found quiz:', quiz.id);
         let score = 0;
+        const results = [];
         for (const answer of dto.answers) {
             const question = quiz.questions.find((q) => q.id === answer.questionId);
             if (!question) {
@@ -63,22 +81,85 @@ let QuizzesService = class QuizzesService {
             if (!selectedOption) {
                 throw new common_1.NotFoundException(`Selected option ID ${answer.selectedOptionId} not found for question ${answer.questionId}`);
             }
-            if (selectedOption.isCorrect) {
+            const isCorrect = selectedOption.isCorrect;
+            if (isCorrect) {
                 score++;
             }
+            results.push({
+                questionId: question.id,
+                question: question.question,
+                selectedOption: selectedOption.text,
+                correctOption: question.options.find(opt => opt.isCorrect)?.text,
+                isCorrect: isCorrect
+            });
         }
+        const totalQuestions = quiz.questions.length;
+        const percentage = Math.round((score / totalQuestions) * 100);
         const result = this.resultRepo.create({
-            user: { id: userId },
-            quiz: { id: dto.quizId },
-            score,
+            score: score,
         });
-        return await this.resultRepo.save(result);
+        result.user = { id: userId };
+        result.quiz = { id: dto.quizId };
+        result.userId = userId;
+        result.quizId = dto.quizId;
+        const savedResult = await this.resultRepo.save(result);
+        return {
+            result: savedResult,
+            score: score,
+            totalQuestions: totalQuestions,
+            percentage: percentage,
+            details: results
+        };
     }
     async findOne(id) {
         return await this.quizRepo.findOne({
             where: { id },
             relations: ['questions', 'questions.options'],
         });
+    }
+    async getQuizzesForCourse(courseId) {
+        return this.quizRepo.find({
+            where: { course: { id: courseId } },
+            relations: ['questions', 'questions.options'],
+        });
+    }
+    async update(id, updateQuizDto) {
+        const quiz = await this.quizRepo.findOne({ where: { id } });
+        if (!quiz) {
+            throw new common_1.NotFoundException(`Quiz with ID ${id} not found`);
+        }
+        await this.resultRepo.delete({ quizId: id });
+        quiz.title = updateQuizDto.title;
+        quiz.description = updateQuizDto.description;
+        await this.quizRepo.save(quiz);
+        for (const questionDto of updateQuizDto.questions) {
+            const question = this.questionRepo.create({
+                question: questionDto.question,
+                type: questionDto.type,
+                quiz: quiz,
+            });
+            const savedQuestion = await this.questionRepo.save(question);
+            for (const optionDto of questionDto.options) {
+                const option = this.optionRepo.create({
+                    text: optionDto.text,
+                    isCorrect: optionDto.isCorrect,
+                    question: savedQuestion,
+                });
+                await this.optionRepo.save(option);
+            }
+        }
+        const updatedQuiz = await this.findOne(id);
+        if (!updatedQuiz) {
+            throw new common_1.NotFoundException(`Failed to retrieve updated quiz`);
+        }
+        return updatedQuiz;
+    }
+    async remove(id) {
+        const quiz = await this.quizRepo.findOne({ where: { id } });
+        if (!quiz) {
+            throw new common_1.NotFoundException(`Quiz with ID ${id} not found`);
+        }
+        await this.quizRepo.remove(quiz);
     }
 };
 exports.QuizzesService = QuizzesService;

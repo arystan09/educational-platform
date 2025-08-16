@@ -26,12 +26,17 @@ __decorate([
 ], QuizOptionDto.prototype, "isCorrect", void 0);
 class QuizQuestionDto {
     question;
+    type;
     options;
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], QuizQuestionDto.prototype, "question", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], QuizQuestionDto.prototype, "type", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
@@ -40,6 +45,7 @@ __decorate([
 ], QuizQuestionDto.prototype, "options", void 0);
 class CreateQuizDto {
     title;
+    description;
     courseId;
     questions;
 }
@@ -48,6 +54,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateQuizDto.prototype, "title", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateQuizDto.prototype, "description", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)

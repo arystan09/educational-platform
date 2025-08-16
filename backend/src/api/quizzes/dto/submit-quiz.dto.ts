@@ -1,7 +1,7 @@
-import { IsArray, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class SubmitQuizDto {
-  @IsNumber()
+  @IsString()
   quizId: string;
 
   @IsArray()

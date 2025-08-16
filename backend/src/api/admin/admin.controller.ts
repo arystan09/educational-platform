@@ -5,6 +5,7 @@ import {
   Param,
   Body,
   Patch,
+  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
@@ -34,5 +35,20 @@ export class AdminController {
   @Post('grant-course')
   grantCourseAccess(@Body() dto: GrantCourseAccessDto) {
     return this.adminService.grantCourseAccess(dto);
+  }
+
+  @Delete('users/:userId/courses/:courseId/access')
+  revokeCourseAccess(@Param('userId') userId: string, @Param('courseId') courseId: string) {
+    return this.adminService.revokeCourseAccess(userId, courseId);
+  }
+
+  @Get('users/:userId/enrollments')
+  getUserEnrollments(@Param('userId') userId: string) {
+    return this.adminService.getUserEnrollments(userId);
+  }
+
+  @Get('enrollments')
+  getAllEnrollments() {
+    return this.adminService.getAllEnrollments();
   }
 }

@@ -19,15 +19,21 @@ export class CoursesService {
 
   async findAll() {
     return this.courseRepository.find({
+      relations: ['createdBy', 'enrollments', 'enrollments.user'],
+    });
+  }
+
+  async findPublished() {
+    return this.courseRepository.find({
       where: { isPublished: true },
-      relations: ['createdBy'],
+      relations: ['createdBy', 'enrollments', 'enrollments.user'],
     });
   }
 
   async findOne(id: string) {
     const course = await this.courseRepository.findOne({
       where: { id },
-      relations: ['createdBy'],
+      relations: ['createdBy', 'enrollments', 'enrollments.user'],
     });
     if (!course) throw new NotFoundException('Курс не найден');
     return course;

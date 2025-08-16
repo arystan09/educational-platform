@@ -1,13 +1,28 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import * as PDFDocument from 'pdfkit';
 import * as fs from 'fs';
 import * as path from 'path';
 import { User } from '../users/entities/user.entity';
 import { Course } from '../courses/entites/course.entity';
+import { Certificate } from './entities/certificate.entity';
 
 @Injectable()
 export class CertificateService {
   private certsDir = path.resolve(__dirname, '..', '..', 'certificates');
+
+  constructor(
+    @InjectRepository(Certificate)
+    private certificateRepository: Repository<Certificate>,
+  ) {}
+
+  async getUserCertificates(userId: string): Promise<Certificate[]> {
+    return this.certificateRepository.find({
+      where: { user: { id: userId } },
+      relations: ['user', 'course'],
+    });
+  }
 
   async generate(user: User, course: Course): Promise<string> {
     if (!fs.existsSync(this.certsDir)) fs.mkdirSync(this.certsDir);

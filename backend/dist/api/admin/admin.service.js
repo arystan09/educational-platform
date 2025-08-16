@@ -18,15 +18,23 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("../users/entities/user.entity");
 const course_entity_1 = require("../courses/entites/course.entity");
+const enrollment_entity_1 = require("../enrollment/entities/enrollment.entity");
+const enrollment_status_enum_1 = require("../enrollment/enums/enrollment-status.enum");
+const role_enum_1 = require("../users/enums/role.enum");
 let AdminService = class AdminService {
     userRepo;
     courseRepo;
-    constructor(userRepo, courseRepo) {
+    enrollmentRepo;
+    constructor(userRepo, courseRepo, enrollmentRepo) {
         this.userRepo = userRepo;
         this.courseRepo = courseRepo;
+        this.enrollmentRepo = enrollmentRepo;
     }
     async getAllUsers() {
-        return this.userRepo.find({ relations: ['enrollments'] });
+        return this.userRepo.find({
+            relations: ['enrollments', 'enrollments.course'],
+            where: { role: role_enum_1.Role.STUDENT }
+        });
     }
     async updateUserRole(id, dto) {
         const user = await this.userRepo.findOne({ where: { id } });
@@ -36,12 +44,47 @@ let AdminService = class AdminService {
         return this.userRepo.save(user);
     }
     async grantCourseAccess(dto) {
-        const user = await this.userRepo.findOne({ where: { id: dto.userId }, relations: ['enrollments'] });
+        const user = await this.userRepo.findOne({ where: { id: dto.userId } });
         const course = await this.courseRepo.findOne({ where: { id: dto.courseId } });
-        if (!user || !course)
-            throw new common_1.NotFoundException('User or Course not found');
-        user.enrollments.push({ user, course, startedAt: new Date() });
-        return this.userRepo.save(user);
+        if (!user)
+            throw new common_1.NotFoundException('User not found');
+        if (!course)
+            throw new common_1.NotFoundException('Course not found');
+        const existingEnrollment = await this.enrollmentRepo.findOne({
+            where: { user: { id: dto.userId }, course: { id: dto.courseId } }
+        });
+        if (existingEnrollment) {
+            existingEnrollment.status = enrollment_status_enum_1.EnrollmentStatus.APPROVED;
+            return this.enrollmentRepo.save(existingEnrollment);
+        }
+        const enrollment = this.enrollmentRepo.create({
+            user,
+            course,
+            status: enrollment_status_enum_1.EnrollmentStatus.APPROVED,
+        });
+        return this.enrollmentRepo.save(enrollment);
+    }
+    async revokeCourseAccess(userId, courseId) {
+        const enrollment = await this.enrollmentRepo.findOne({
+            where: { user: { id: userId }, course: { id: courseId } }
+        });
+        if (!enrollment) {
+            throw new common_1.NotFoundException('Enrollment not found');
+        }
+        await this.enrollmentRepo.remove(enrollment);
+        return { message: 'Course access revoked successfully' };
+    }
+    async getUserEnrollments(userId) {
+        const enrollments = await this.enrollmentRepo.find({
+            where: { user: { id: userId } },
+            relations: ['course'],
+        });
+        return enrollments;
+    }
+    async getAllEnrollments() {
+        return this.enrollmentRepo.find({
+            relations: ['user', 'course'],
+        });
     }
 };
 exports.AdminService = AdminService;
@@ -49,7 +92,9 @@ exports.AdminService = AdminService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(course_entity_1.Course)),
+    __param(2, (0, typeorm_1.InjectRepository)(enrollment_entity_1.Enrollment)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], AdminService);
 //# sourceMappingURL=admin.service.js.map

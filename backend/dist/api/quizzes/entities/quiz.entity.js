@@ -16,8 +16,11 @@ const quiz_question_entity_1 = require("./quiz-question.entity");
 let Quiz = class Quiz {
     id;
     title;
+    description;
     course;
     questions;
+    createdAt;
+    updatedAt;
 };
 exports.Quiz = Quiz;
 __decorate([
@@ -29,6 +32,10 @@ __decorate([
     __metadata("design:type", String)
 ], Quiz.prototype, "title", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], Quiz.prototype, "description", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => course_entity_1.Course, course => course.quizzes),
     __metadata("design:type", course_entity_1.Course)
 ], Quiz.prototype, "course", void 0);
@@ -36,6 +43,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => quiz_question_entity_1.QuizQuestion, question => question.quiz, { cascade: true }),
     __metadata("design:type", Array)
 ], Quiz.prototype, "questions", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Quiz.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Quiz.prototype, "updatedAt", void 0);
 exports.Quiz = Quiz = __decorate([
     (0, typeorm_1.Entity)()
 ], Quiz);

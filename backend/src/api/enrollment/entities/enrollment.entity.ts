@@ -26,6 +26,6 @@ export class Enrollment {
   @Column({ default: false })
   completed: boolean;
 
-  @Column({ type: 'enum', enum: EnrollmentStatus, default: EnrollmentStatus.PENDING })
+  @Column({ type: 'varchar', default: 'PENDING' })
   status: EnrollmentStatus;
 }
